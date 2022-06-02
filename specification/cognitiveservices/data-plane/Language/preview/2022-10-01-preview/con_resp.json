@@ -1,0 +1,64 @@
+{
+    "jobId": "738120e1-7987-4d19-af0c-89d277762a2f",
+    "lastUpdatedDateTime": "2022-05-31T16:52:59Z",
+    "createdDateTime": "2022-05-31T16:52:51Z",
+    "expirationDateTime": "2022-06-01T16:52:51Z",
+    "status": "succeeded",
+    "errors": [],
+    "displayName": "Analyze conversations from 123",
+    "tasks": {
+        "completed": 1,
+        "failed": 0,
+        "inProgress": 0,
+        "total": 1,
+        "items": [
+            {
+                "kind": "conversationalSummarizationResults",
+                "taskName": "analyze 1",
+                "lastUpdateDateTime": "2022-05-31T16:52:59.85913Z",
+                "status": "succeeded",
+                "results": {
+                    "conversations": [
+                        {
+                            "id": "conversation1",
+                            "segments": [
+                                {
+                                    "ids": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "summaries": [
+                                        {
+                                            "aspect": "issue",
+                                            "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
+                                        },
+                                        {
+                                            "aspect": "resolution",
+                                            "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
+                                        },
+                                        {
+                                            "aspect": "generalTitle",
+                                            "text": "Machine Connection Prompting"
+                                        },
+                                        {
+                                            "aspect": "generalSummary",
+                                            "text": "Customer_1 asked the wifi connection issue, and Agent_1 asked Customer_1 to check the Contoso app."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "2022-05-15-preview"
+                }
+            }
+        ]
+    }
+}

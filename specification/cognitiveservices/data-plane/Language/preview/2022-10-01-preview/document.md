@@ -15,33 +15,36 @@ curl -i -X POST https://your-text-analytics-endpoint-here/language/analyze-text/
 -d \
 ' 
 {
-  "analysisInput": {
-    "documents": [
-      {
-        "language": "en",
-        "id": "1",
-        "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks."
-      }
-    ]
-  },
-  "tasks": [
-    {
-      "kind": "ExtractiveSummarizationTask",
-      "taskName": "analyze 1",
-      "parameters": {
-        "model-version": "latest",
-        "sentenceCount": 3,
-        "sortBy": "Offset"
-      }
+    "analysisInput": {
+        "documents": [
+            {
+                "language": "en",
+                "id": "1",
+                "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks."
+            }
+        ]
     },
-    {
-      "kind": "AbstractiveSummarizationTasks",
-      "taskName": "analyze 2",
-      "parameters": {
-        "model-version": "latest"
-      }
-    }
-  ]
+    "tasks": [
+        {
+            "kind": "ExtractiveSummarizationTask",
+            "taskName": "analyze 1",
+            "parameters": {
+                "model-version": "latest",
+                "sentenceCount": 3,
+                "sortBy": "Offset"
+            }
+        },
+        {
+            "kind": "AbstractiveSummarizationTasks",
+            "taskName": "analyze 2",
+            "parameters": {
+                "model-version": "latest",
+                "segmentationOptions": {
+                    "enabled": false
+                }
+            }
+        }
+    ]
 }
 '
 ```
@@ -58,82 +61,78 @@ Result schema is changed to reflect the task structure change.
 
 ```
 {
-   "jobId":"da3a2f68-eb90-4410-b28b-76960d010ec6",
-   "lastUpdateDateTime":"2021-08-24T19:15:47Z",
-   "createdDateTime":"2021-08-24T19:15:28Z",
-   "expirationDateTime":"2021-08-25T19:15:28Z",
-   "status":"succeeded",
-   "errors":[],
-   "displayName":"NA",
-   "tasks":{
-      "completed":2,
-      "failed":0,
-      "inProgress":0,
-      "total":2,
-      "items":[
-         {
-            "lastUpdateDateTime":"2021-08-24T19:15:48.0011189Z",
-            "taskName":"analyze 1",
-            "state":"succeeded",
-            "results":{
-               "documents":[
-                  {
-                     "id":"1",
-                     "sentences":[
+    "jobId": "da3a2f68-eb90-4410-b28b-76960d010ec6",
+    "lastUpdateDateTime": "2021-08-24T19:15:47Z",
+    "createdDateTime": "2021-08-24T19:15:28Z",
+    "expirationDateTime": "2021-08-25T19:15:28Z",
+    "status": "succeeded",
+    "errors": [],
+    "displayName": "NA",
+    "tasks": {
+        "completed": 2,
+        "failed": 0,
+        "inProgress": 0,
+        "total": 2,
+        "items": [
+            {
+                "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
+                "taskName": "analyze 1",
+                "state": "succeeded",
+                "results": {
+                    "documents": [
                         {
-                           "text":"At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
-                           "rankScore":1.0,
-                           "offset":0,
-                           "length":160
-                        },
-                        {
-                           "text":"In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z).",
-                           "rankScore":0.9582327572675664,
-                           "offset":324,
-                           "length":192
-                        },
-                        {
-                           "text":"At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
-                           "rankScore":0.9294747193132348,
-                           "offset":517,
-                           "length":203
+                            "id": "1",
+                            "sentences": [
+                                {
+                                    "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
+                                    "rankScore": 1.0,
+                                    "offset": 0,
+                                    "length": 160
+                                },
+                                {
+                                    "text": "In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z).",
+                                    "rankScore": 0.9582327572675664,
+                                    "offset": 324,
+                                    "length": 192
+                                },
+                                {
+                                    "text": "At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
+                                    "rankScore": 0.9294747193132348,
+                                    "offset": 517,
+                                    "length": 203
+                                }
+                            ],
+                            "warnings": []
                         }
-                     ],
-                     "warnings":[
-                        
-                     ]
-                  }
-               ],
-               "errors":[
-                  
-               ],
-               "modelVersion":"2021-08-01"
+                    ],
+                    "errors": [],
+                    "modelVersion": "2021-08-01"
+                }
+            },
+            {
+                "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
+                "taskName": "analyze 2",
+                "state": "succeeded",
+                "results": {
+                    "documents": [
+                        {
+                            "id": "1",
+                            "segments": [
+                                {
+                                    "offset": 0,
+                                    "length": 1629,
+                                    "text": "Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration."
+                                }
+                            ],
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "2021-08-01"
+                }
             }
-         },
-         {
-           "lastUpdateDateTime":"2021-08-24T19:15:48.0011189Z",
-           "taskName":"analyze 2",
-           "state":"succeeded",
-           "results":{
-             "documents":[
-               {
-                 "id":"1",
-                 "segments":[
-                   {
-                     "startIndex": 0,
-                     "endIndex": 1629,
-                     "text":"Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration."
-                   }
-                 ],
-                 "warnings":[]
-               }
-             ],
-             "errors":[],
-             "modelVersion":"2021-08-01"
-           }
-         }
-      ]
-   }
+        ]
+    }
 }
 ```
 
@@ -214,10 +213,9 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
             "kind": "ConversationalSummarizationTask",
             "parameters": {
                 "modelVersion": "latest",
-                "segmentationOptions":
-                {
-                    "enabled": false,
-                }
+                "segmentationOptions": {
+                    "enabled": false
+                },
                 "summaryAspects": [
                     "Issue",
                     "Resolution",
@@ -263,9 +261,17 @@ curl -X GET    https://your-language-endpoint-here/language/analyze-conversation
                     "conversations": [
                         {
                             "id": "conversation1",
-                            "segments":[
+                            "segments": [
                                 {
-                                    "ids": ["1", "2", "3", "4", "5", "6", "7"]
+                                    "ids": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
                                     "summaries": [
                                         {
                                             "aspect": "issue",
@@ -283,10 +289,9 @@ curl -X GET    https://your-language-endpoint-here/language/analyze-conversation
                                             "aspect": "generalSummary",
                                             "text": "Customer_1 asked the wifi connection issue, and Agent_1 asked Customer_1 to check the Contoso app."
                                         }
-                                    ],
+                                    ]
                                 }
-                            ]
-                            
+                            ],
                             "warnings": []
                         }
                     ],
