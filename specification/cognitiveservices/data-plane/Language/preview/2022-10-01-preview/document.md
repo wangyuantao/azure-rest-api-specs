@@ -232,10 +232,9 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
 ```
 
 #### Response
-1. Question to Mikael, why the endpoint is not `/language/analyze-conversations/jobs`?
 
 ```
-curl -X GET    https://your-text-analytics-endpoint-here/text/analytics/v3.2-preview.1/analyze/jobs/my-job-id \
+curl -X GET    https://your-language-endpoint-here/language/analyze-conversations/jobs/my-job-id \
 -H "Content-Type: application/json" \
 -H "Ocp-Apim-Subscription-Key: your-key-here"
 ```
