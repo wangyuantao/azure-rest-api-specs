@@ -137,93 +137,14 @@ Result schema is changed to reflect the task structure change.
 }
 ```
 
-## Document Abstractive Summarization
+## Conversation Summarization
 
 ### Request
 
-```
-curl -i -X POST https://your-text-analytics-endpoint-here/language/analyze-text/jobs?api-version=2022-10-01-preview \
--H "Content-Type: application/json" \
--H "Ocp-Apim-Subscription-Key: your-key-here" \
--d \
-' 
-{
-  "analysisInput": {
-    "documents": [
-      {
-        "language": "en",
-        "id": "1",
-        "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks."
-      }
-    ]
-  },
-  "tasks": [
-    {
-      "kind": "AbstractiveSummarizationTasks",
-      "parameters": {
-        "model-version": "latest"
-      }
-    }
-  ]
-}
-'
-```
+1. Add optional `startTime` to `conversationItem`.
+2. Add new aspects `GeneralTitle` and `GeneralSummary`.
+3. Add segmentation options.
 
-### Response
-1. Only output 1 segment for now.
-
-```
-{
-   "jobId":"da3a2f68-eb90-4410-b28b-76960d010ec6",
-   "lastUpdateDateTime":"2021-08-24T19:15:47Z",
-   "createdDateTime":"2021-08-24T19:15:28Z",
-   "expirationDateTime":"2021-08-25T19:15:28Z",
-   "status":"succeeded",
-   "errors":[
-      
-   ],
-   "displayName":"NA",
-   "tasks":{
-      "completed":1,
-      "failed":0,
-      "inProgress":0,
-      "total":1,
-      "summarizationTasks":[
-         {
-            "lastUpdateDateTime":"2021-08-24T19:15:48.0011189Z",
-            "taskName":"AbstractiveSummarization_latest",
-            "state":"succeeded",
-            "results":{
-               "documents":[
-                  {
-                     "id":"1",
-                     "segments":[
-                       {
-                         "startIndex": 0,
-                         "endIndex": 1629,
-                         "text":"Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration."
-                       }
-                     ],
-                     "warnings":[
-                        
-                     ]
-                  }
-               ],
-               "errors":[
-                  
-               ],
-               "modelVersion":"2021-08-01"
-            }
-         }
-      ]
-   }
-}
-```
-
-### Conversation Issue and Resolution Summarization
-1. No Change. Duplicate to api-version `2022-10-01-preview`.
-
-#### Request
 ```
 curl -i -X POST https://your-language-endpoint-here/language/analyze-conversations/jobs?api-version=2022-10-01-preview \
 -H "Content-Type: application/json" \
@@ -243,12 +164,14 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
                         "text": "Hello, you’re chatting with Rene. How may I help you?",
                         "id": "1",
                         "role": "Agent",
+                        "startTime": "00:00:01",
                         "participantId": "Agent_1"
                     },
                     {
                         "text": "Hi, I tried to set up wifi connection for Smart Brew 300 espresso machine, but it didn’t work.",
                         "id": "2",
                         "role": "Customer",
+                        "startTime": "00:00:21",
                         "participantId": "Customer_1"
                     },
                     {
@@ -291,9 +214,15 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
             "kind": "ConversationalSummarizationTask",
             "parameters": {
                 "modelVersion": "latest",
+                "segmentationOptions":
+                {
+                    "enabled": false,
+                }
                 "summaryAspects": [
                     "Issue",
-                    "Resolution"
+                    "Resolution",
+                    "GeneralTitle",
+                    "GeneralSummary"
                 ]
             }
         }
@@ -335,16 +264,30 @@ curl -X GET    https://your-text-analytics-endpoint-here/text/analytics/v3.2-pre
                     "conversations": [
                         {
                             "id": "conversation1",
-                            "summaries": [
+                            "segments":[
                                 {
-                                    "aspect": "issue",
-                                    "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
-                                },
-                                {
-                                    "aspect": "resolution",
-                                    "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
+                                    "ids": ["1", "2", "3", "4", "5", "6", "7"]
+                                    "summaries": [
+                                        {
+                                            "aspect": "issue",
+                                            "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
+                                        },
+                                        {
+                                            "aspect": "resolution",
+                                            "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
+                                        },
+                                        {
+                                            "aspect": "generalTitle",
+                                            "text": "Machine Connection Prompting"
+                                        },
+                                        {
+                                            "aspect": "generalSummary",
+                                            "text": "Customer_1 asked the wifi connection issue, and Agent_1 asked Customer_1 to check the Contoso app."
+                                        }
+                                    ],
                                 }
-                            ],
+                            ]
+                            
                             "warnings": []
                         }
                     ],
