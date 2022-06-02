@@ -236,7 +236,7 @@ curl -X GET    https://your-language-endpoint-here/language/analyze-conversation
 -H "Content-Type: application/json" \
 -H "Ocp-Apim-Subscription-Key: your-key-here"
 ```
-
+Put summaries under each segment. When segmentation disabled, there will be single segment.
 ```
 {
     "jobId": "738120e1-7987-4d19-af0c-89d277762a2f",
