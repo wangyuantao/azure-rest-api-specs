@@ -17,8 +17,8 @@ For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the 
 | Parameter | Type | Valid Values | Default Value | Validation | Future extension |
 | --- | --- | --- | --- | --- | --- |
 | aspects | enum[] | issue<br/>resolution<br/>generalTitle<br/>generalSummary | [generalSummary] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `generalTitle` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> | `sympton`, etc. |
-| abstractiveness | enum | extractive<br/>abstractive | abstractive | Required | wordExtractive - only use words from input, allow generate novel sentence |
-| length | enum | Short<br/>Medium<br/>Long<br/> | Medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` | 5 levels control<br/> Support in `ConversationalSummarizationTask` |
+| abstractiveness | enum | extractive<br/>abstractive |  | Required | wordExtractive - only use words from input, allow generate novel sentence |
+| length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` | 5 levels control<br/> Support in `ConversationalSummarizationTask` |
 | sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
 | genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | Document: `news`, `thesis`, `email`, `KB`<br/>Conversation: `chat`, `salescall` |
 
