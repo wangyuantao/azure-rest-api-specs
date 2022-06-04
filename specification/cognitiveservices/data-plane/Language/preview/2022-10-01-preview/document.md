@@ -1,12 +1,37 @@
 # Summarization API
 
+## api-version
+`2022-10-01-preview`
+
+## Endpoint and Task Kind
+The legacy endpoint `/text/analytics/v3.2-preview.1/analyze` won't change.
+
+| | | | 
+| --- | --- | --- |
+| Endpoint | `/language/analyze-text/` | `/language/analyze-conversations/` |
+| Task Kind | `DocumentSummarizationTask` | `ConversationalSummarizationTask` |
+
+## Request Schema
+For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the request body use the same schema `SummarizationTask`.
+
+| Parameter | Type | Valid Values | Default Value | Validation | Future extension |
+| --- | --- | --- | --- | --- | --- |
+| aspects | enum[] | issue<br/>resolution<br/>generalTitle<br/>generalSummary | [generalSummary] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `generalTitle` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> | `sympton`, etc. |
+| abstractiveness | enum | extractive<br/>abstractive | abstractive | Required | wordExtractive - only use words from input, allow generate novel sentence |
+| length | enum | Short<br/>Medium<br/>Long<br/> | Medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` | 5 levels control<br/> Support in `ConversationalSummarizationTask` |
+| sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
+| genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | Document: `news`, `thesis`, `email`, `KB`<br/>Conversation: `chat`, `salescall` |
+
+## Context Selection
+We are not going to expose the segmentation as options.
+Topic segmentation is applied automatically if and only if genre=`generic` in `ConversationalSummarizationTask`.
+
 ## Document Summarization
 
 ### Request
 
 1. Change endpoint `/text/analytics/v3.2-preview.1/analyze` to `/language/analyze-text/jobs?api-version=2022-10-01-preview`.
-2. Introduce task kind as `ExtractiveSummarizationTask` instead of using top level `ExtractiveSummarizationTasks`.
-3. Introduce new task kind: `AbstractiveSummarizationTask`.
+2. Consolidate to general task kind as `DocumentSummarizationTask`.
 
 ```
 curl -i -X POST https://your-text-analytics-endpoint-here/language/analyze-text/jobs?api-version=2022-10-01-preview \
