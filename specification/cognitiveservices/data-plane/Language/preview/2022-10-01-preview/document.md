@@ -4,7 +4,6 @@
 `2022-10-01-preview`
 
 ## Endpoint and Task Kind
-The legacy endpoint `/text/analytics/v3.2-preview.1/analyze` won't change.
 
 | | | | 
 | --- | --- | --- |
@@ -14,31 +13,100 @@ The legacy endpoint `/text/analytics/v3.2-preview.1/analyze` won't change.
 ## Request Schema
 For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the request body use the same schema `SummarizationTask`.
 
-| Parameter | Type | Valid Values | Default Value | Validation | Future extension |
-| --- | --- | --- | --- | --- | --- |
-| aspects | enum[] | issue<br/>resolution<br/>generalTitle<br/>generalSummary | [generalSummary] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `generalTitle` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> | `sympton`, etc. |
-| abstractiveness | enum | extractive<br/>abstractive |  | Required | wordExtractive - only use words from input, allow generate novel sentence |
-| length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` | 5 levels control<br/> Support in `ConversationalSummarizationTask` |
+| Parameter | Type | Valid Values | Default Value | Validation |
+| --- | --- | --- | --- | --- |
+| genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | 
+| aspects | enum[] | issue<br/>resolution<br/>title<br/>generic | [generic] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `title` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> |
+| abstractiveness | enum | extractive<br/>abstractive |  | Required |
+| length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` |
 | sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
-| genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | Document: `news`, `thesis`, `email`, `KB`<br/>Conversation: `chat`, `salescall` |
+| sortBy | enum | Offset,Rank | Offset | Can only set if abstractiveness=`extractive` | |
+
+## Scenario Mapping
+Below table shows how to map summarization scenarios to different task and parameters.
+
+| Scenario | task | genre | aspects | abstractiveness |
+| --- | --- | --- | --- | --- |
+| Document Extractive | DocumentSummarizationTask | generic | ["generic"] | extractive |
+| Document Abstractive | DocumentSummarizationTask | generic | ["generic"] | abstractive |
+| Issue & Resolution | ConversationalSummarizationTask | callcenter | ["issue","resolution"] | abstractive |
+| Chapters & Notes | ConversationalSummarizationTask | generic | ["title", "generic"] | abstractive |
+
+## ConversationalSummarizationTask aspects
+* For callcenter genre, user can set aspects as ["issue"] or ["resolution"] as well
+* For generic genre, user can set aspects as ["title"] or ["generic"] as well
+
 
 ## Context Selection
-We are not going to expose the segmentation as options.
-Topic segmentation is applied automatically if and only if genre=`generic` in `ConversationalSummarizationTask`.
 
-## Document Summarization
+* We are not going to expose the segmentation as options.
+
+* Topic segmentation is applied automatically if and only if genre=`generic` in `ConversationalSummarizationTask`.
+
+* In future, we might use context selection algorithm other than topic segmentation.
+
+| Scenario | Context |
+| --- | --- |
+| Document Extractive | Extracted Sentences themselves |
+| Document Abstractive | The whole document (TBD are we able to have document segmentation before Ignite?) |
+| Issue & Resolution | The whole conversation |
+| Chapters & Notes | Topic segmentation result |
+
+## Input Document Schema
+
+| Field | Type | Validation |
+| --- | --- | --- |
+| language | enum | |
+| id | string | |
+| text | string | <125K characters|
+
+## Input Conversation Schema
+
+| Field | Type | Validation |
+| --- | --- | --- |
+| language | enum | |
+| id | string | |
+| conversations | ConversationItem[] | |
+
+## Conversation Item Schema
+
+| Field | Type | Validation |
+| --- | --- | --- |
+| id | string | No duplication, it will be referenced in summary context |
+| text | string | <5000 characters (TBD CCA?) |
+| role | enum | Can only be used for callcenter: valid values are `Agent` and `Customer`|
+| participantId | string | Length > 0 |
+| startTime | DateTime | Optional. If present, must present for all items and sorted |
+| duration | TimeSpan | Optional. If present on any item, `startTime` must present on that item as well |
+
+## Summary Schema
+
+
+| Field | Type | Description |
+| --- | --- | --- |
+| id | string | Reference the input document id or input conversation id |
+| summaries | SummaryItem[] |  |
+
+## Summary Item Schema
+
+For each input document or conversation, we produce multiple summary items.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| aspect | enum | One of the aspect from the request |
+| text | string | Summary text |
+| rankScore | float | Only applicable for extractive summary |
+| offset | int | Start position of the context in character. Only applicable for document summary. |
+| length | int | Length of the context in character. Only applicable for document summary |
+| context | string[] | conversationItem id list of the context. Only applicable for generic conversation summary. |
+
+For extractive summary, the summary context is just the extracted sentence text itself.
+
+## Document Summarization Example
 
 ### Request
 
-1. Change endpoint `/text/analytics/v3.2-preview.1/analyze` to `/language/analyze-text/jobs?api-version=2022-10-01-preview`.
-2. Consolidate to general task kind as `DocumentSummarizationTask`.
-
-```
-curl -i -X POST https://your-text-analytics-endpoint-here/language/analyze-text/jobs?api-version=2022-10-01-preview \
--H "Content-Type: application/json" \
--H "Ocp-Apim-Subscription-Key: your-key-here" \
--d \
-' 
+```json
 {
     "analysisInput": {
         "documents": [
@@ -51,40 +119,33 @@ curl -i -X POST https://your-text-analytics-endpoint-here/language/analyze-text/
     },
     "tasks": [
         {
-            "kind": "ExtractiveSummarizationTask",
-            "taskName": "analyze 1",
+            "kind": "DocumentSummarizationTask",
+            "taskName": "document extractive task 1",
             "parameters": {
-                "model-version": "latest",
+                "genre": "generic",
+                "aspects": ["generic"],
+                "abstractiveness": "extractive",
                 "sentenceCount": 3,
                 "sortBy": "Offset"
             }
         },
         {
-            "kind": "AbstractiveSummarizationTasks",
-            "taskName": "analyze 2",
+            "kind": "DocumentSummarizationTask",
+            "taskName": "document abstractive task 2",
             "parameters": {
-                "model-version": "latest",
-                "segmentationOptions": {
-                    "enabled": false
-                }
+                "genre": "generic",
+                "aspects": ["generic"],
+                "abstractiveness": "abstractive",
+                "length": "long"
             }
         }
     ]
 }
-'
 ```
 
 ### Response
-Change endpoint `/text/analytics/v3.2-preview.1/analyze` to `/language/analyze-text/jobs?api-version=2022-10-01-preview`.
-```
-curl -X GET    https://your-text-analytics-endpoint-here/language/analyze-text/jobs/my-job-id?api-version=2022-10-01-preview \
--H "Content-Type: application/json" \
--H "Ocp-Apim-Subscription-Key: your-key-here"
-```
 
-Result schema is changed to reflect the task structure change.
-
-```
+```json
 {
     "jobId": "da3a2f68-eb90-4410-b28b-76960d010ec6",
     "lastUpdateDateTime": "2021-08-24T19:15:47Z",
@@ -101,13 +162,13 @@ Result schema is changed to reflect the task structure change.
         "items": [
             {
                 "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
-                "taskName": "analyze 1",
+                "taskName": "document extractive task 1",
                 "state": "succeeded",
                 "results": {
                     "documents": [
                         {
                             "id": "1",
-                            "sentences": [
+                            "summaries": [
                                 {
                                     "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
                                     "rankScore": 1.0,
@@ -136,13 +197,13 @@ Result schema is changed to reflect the task structure change.
             },
             {
                 "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
-                "taskName": "analyze 2",
+                "taskName": "document abstractive task 2",
                 "state": "succeeded",
                 "results": {
                     "documents": [
                         {
                             "id": "1",
-                            "segments": [
+                            "summaries": [
                                 {
                                     "offset": 0,
                                     "length": 1629,
@@ -161,20 +222,11 @@ Result schema is changed to reflect the task structure change.
 }
 ```
 
-## Conversation Summarization
+## Conversation Summarization Example
 
 ### Request
 
-1. Add optional `startTime` to `conversationItem`.
-2. Add new aspects `GeneralTitle` and `GeneralSummary`.
-3. Add segmentation options.
-
-```
-curl -i -X POST https://your-language-endpoint-here/language/analyze-conversations/jobs?api-version=2022-10-01-preview \
--H "Content-Type: application/json" \
--H "Ocp-Apim-Subscription-Key: your-key-here" \
--d \
-' 
+```json
 {
     "displayName": "Analyze conversations from 123",
     "analysisInput": {
@@ -202,30 +254,35 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
                         "text": "I’m sorry to hear that. Let’s see what we can do to fix this issue. Could you please try the following steps for me? First, could you push the wifi connection button, hold for 3 seconds, then let me know if the power light is slowly blinking on and off every second?",
                         "id": "3",
                         "role": "Agent",
+                        "startTime": "00:00:22",
                         "participantId": "Agent_1"
                     },
                     {
                         "text": "Yes, I pushed the wifi connection button, and now the power light is slowly blinking.",
                         "id": "4",
                         "role": "Customer",
+                        "startTime": "00:00:25",
                         "participantId": "Customer_1"
                     },
                     {
                         "text": "Great. Thank you! Now, please check in your Contoso Coffee app. Does it prompt to ask you to connect with the machine?",
                         "id": "5",
                         "role": "Agent",
+                        "startTime": "00:00:29",
                         "participantId": "Agent_1"
                     },
                     {
                         "text": "No. Nothing happened.",
                         "id": "6",
                         "role": "Customer",
+                        "startTime": "00:00:30",
                         "participantId": "Customer_1"
                     },
                     {
                         "text": "I’m very sorry to hear that. Let me see if there’s another way to fix the issue. Please hold on for a minute.",
                         "id": "7",
                         "role": "Agent",
+                        "startTime": "00:00:35",
                         "participantId": "Agent_1"
                     }
                 ]
@@ -234,35 +291,36 @@ curl -i -X POST https://your-language-endpoint-here/language/analyze-conversatio
     },
     "tasks": [
         {
-            "taskName": "analyze 1",
+            "taskName": "Issue and Resolution Task 1",
             "kind": "ConversationalSummarizationTask",
             "parameters": {
-                "modelVersion": "latest",
-                "segmentationOptions": {
-                    "enabled": false
-                },
-                "summaryAspects": [
-                    "Issue",
-                    "Resolution",
-                    "GeneralTitle",
-                    "GeneralSummary"
+                "genre": "callcenter",
+                "abstractiveness": "abstractive",
+                "aspects": [
+                    "issue",
+                    "resolution"
+                ]
+            }
+        },
+        {
+            "taskName": "Chapters and Notes Task 2",
+            "kind": "ConversationalSummarizationTask",
+            "parameters": {
+                "genre": "generic",
+                "abstractiveness": "abstractive",
+                "aspects": [
+                    "title",
+                    "generic"
                 ]
             }
         }
     ]
 }
-'
 ```
 
 #### Response
 
-```
-curl -X GET    https://your-language-endpoint-here/language/analyze-conversations/jobs/my-job-id \
--H "Content-Type: application/json" \
--H "Ocp-Apim-Subscription-Key: your-key-here"
-```
-Put summaries under each segment. When segmentation disabled, there will be single segment.
-```
+```json
 {
     "jobId": "738120e1-7987-4d19-af0c-89d277762a2f",
     "lastUpdatedDateTime": "2022-05-31T16:52:59Z",
@@ -272,23 +330,23 @@ Put summaries under each segment. When segmentation disabled, there will be sing
     "errors": [],
     "displayName": "Analyze conversations from 123",
     "tasks": {
-        "completed": 1,
+        "completed": 2,
         "failed": 0,
         "inProgress": 0,
-        "total": 1,
+        "total": 2,
         "items": [
             {
                 "kind": "conversationalSummarizationResults",
-                "taskName": "analyze 1",
+                "taskName": "Issue and Resolution Task 1",
                 "lastUpdateDateTime": "2022-05-31T16:52:59.85913Z",
                 "status": "succeeded",
                 "results": {
                     "conversations": [
                         {
                             "id": "conversation1",
-                            "segments": [
+                            "summaries": [
                                 {
-                                    "ids": [
+                                    "context": [
                                         "1",
                                         "2",
                                         "3",
@@ -297,24 +355,77 @@ Put summaries under each segment. When segmentation disabled, there will be sing
                                         "6",
                                         "7"
                                     ],
-                                    "summaries": [
-                                        {
-                                            "aspect": "issue",
-                                            "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
-                                        },
-                                        {
-                                            "aspect": "resolution",
-                                            "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
-                                        },
-                                        {
-                                            "aspect": "generalTitle",
-                                            "text": "Machine Connection Prompting"
-                                        },
-                                        {
-                                            "aspect": "generalSummary",
-                                            "text": "Customer_1 asked the wifi connection issue, and Agent_1 asked Customer_1 to check the Contoso app."
-                                        }
-                                    ]
+                                    "aspect": "issue",
+                                    "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
+                                },
+                                {
+                                    "context": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "aspect": "resolution",
+                                    "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
+                                }
+                            ],
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "2022-05-15-preview"
+                }
+            },
+            {
+                "kind": "conversationalSummarizationResults",
+                "taskName": "Chapters and Notes Task 2",
+                "lastUpdateDateTime": "2022-05-31T16:52:59.85913Z",
+                "status": "succeeded",
+                "results": {
+                    "conversations": [
+                        {
+                            "id": "conversation1",
+                            "summaries": [
+                                {
+                                    "context": [
+                                        "1",
+                                        "2",
+                                        "3"
+                                    ],
+                                    "aspect": "title",
+                                    "text": "Machine Connection Prompting"
+                                },
+                                {
+                                    "context": [
+                                        "1",
+                                        "2",
+                                        "3"
+                                    ],
+                                    "aspect": "generic",
+                                    "text": "Customer_1 inqueried the wifi connection issue."
+                                },
+                                {
+                                    "context": [
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "aspect": "title",
+                                    "text": "Contoso App"
+                                },
+                                {
+                                    "context": [
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7"
+                                    ],
+                                    "aspect": "generic",
+                                    "text": "Agent_1 asked Customer_1 to check the Contoso app."
                                 }
                             ],
                             "warnings": []
