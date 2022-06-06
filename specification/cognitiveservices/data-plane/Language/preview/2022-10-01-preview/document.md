@@ -16,7 +16,7 @@ For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the 
 | Parameter | Type | Valid Values | Default Value | Validation |
 | --- | --- | --- | --- | --- |
 | genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | 
-| aspects | enum[] | issue<br/>resolution<br/>title<br/>generic | [generic] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `title` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> |
+| aspects | enum[] | issue<br/>resolution<br/>title<br/>generic | [generic] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `title` and `generic` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> |
 | abstractiveness | enum | extractive<br/>abstractive |  | Required |
 | length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` |
 | sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
@@ -58,7 +58,7 @@ Below table shows how to map summarization scenarios to different task and param
 | --- | --- | --- |
 | language | enum | |
 | id | string | |
-| text | string | <125K characters|
+| text | string | TBD |
 
 ## Input Conversation Schema
 
@@ -66,21 +66,20 @@ Below table shows how to map summarization scenarios to different task and param
 | --- | --- | --- |
 | language | enum | |
 | id | string | |
-| conversations | ConversationItem[] | |
+| conversations | ConversationItem[] | TBD |
 
 ## Conversation Item Schema
 
 | Field | Type | Validation |
 | --- | --- | --- |
 | id | string | No duplication, it will be referenced in summary context |
-| text | string | <5000 characters (TBD CCA?) |
-| role | enum | Can only be used for callcenter: valid values are `Agent` and `Customer`|
+| text | string | TBD |
+| role | enum | Must and can only be used for callcenter genre: valid values are `Agent` and `Customer`|
 | participantId | string | Length > 0 |
 | startTime | DateTime | Optional. If present, must present for all items and sorted |
 | duration | TimeSpan | Optional. If present on any item, `startTime` must present on that item as well |
 
 ## Summary Schema
-
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -98,7 +97,7 @@ For each input document or conversation, we produce multiple summary items.
 | rankScore | float | Only applicable for extractive summary |
 | offset | int | Start position of the context in character. Only applicable for document summary. |
 | length | int | Length of the context in character. Only applicable for document summary |
-| context | string[] | conversationItem id list of the context. Only applicable for generic conversation summary. |
+| context | string[] | conversationItem id list of the context. Only applicable for conversation summary. |
 
 For extractive summary, the summary context is just the extracted sentence text itself.
 
