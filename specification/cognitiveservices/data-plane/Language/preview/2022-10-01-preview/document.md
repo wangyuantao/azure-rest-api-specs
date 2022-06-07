@@ -1,5 +1,9 @@
 # Summarization API
 
+## Goal
+
+## 
+
 ## api-version
 `2022-10-01-preview`
 
@@ -16,12 +20,14 @@ For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the 
 | Parameter | Type | Valid Values | Default Value | Validation |
 | --- | --- | --- | --- | --- |
 | genre | enum | generic<br/>callcenter | generic | `callcenter` can only be used for `ConversationalSummarizationTask` | 
-| aspects | enum[] | issue<br/>resolution<br/>title<br/>generic | [generic] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `title` and `generic` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> |
+| aspects | enum[] | issue<br/>resolution<br/>title*<br/>generic | [generic] | <ol><li>`issue` and `resolution` can only be used when genre=`callcenter`</li><li> `title` and `generic` can only be used when genre=`generic` and in `ConversationalSummarizationTask`</li></old> |
 | abstractiveness | enum | extractive<br/>abstractive |  | Required |
 | length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` |
 | sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
 | sortBy | enum | Offset,Rank | Offset | Can only set if abstractiveness=`extractive` | |
 | model-version | string | 2022-10-01-preview<br/>latest | latest |  | |
+
+TBD: title might be renamed as chapter or topic
 
 ## Scenario Mapping
 Below table shows how to map summarization scenarios to different task and parameters.
@@ -30,13 +36,12 @@ Below table shows how to map summarization scenarios to different task and param
 | --- | --- | --- | --- | --- |
 | Document Extractive | DocumentSummarizationTask | generic | ["generic"] | extractive |
 | Document Abstractive | DocumentSummarizationTask | generic | ["generic"] | abstractive |
-| Issue & Resolution | ConversationalSummarizationTask | callcenter | ["issue","resolution"] | abstractive |
-| Chapters & Notes | ConversationalSummarizationTask | generic | ["title", "generic"] | abstractive |
+| Call Center | ConversationalSummarizationTask | callcenter | ["issue","resolution", "generic"] | abstractive |
+| Meeting | ConversationalSummarizationTask | generic | ["title", "generic"] | abstractive |
 
 ## ConversationalSummarizationTask aspects
-* For callcenter genre, user can set aspects as ["issue"] or ["resolution"] as well
+* For callcenter genre, user can set aspects as ["issue"] or ["resolution"] or ["generic"] as well
 * For generic genre, user can set aspects as ["title"] or ["generic"] as well
-
 
 ## Context Selection
 
