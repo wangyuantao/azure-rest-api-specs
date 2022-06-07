@@ -21,6 +21,7 @@ For both `DocumentSummarizationTask` and `ConversationalSummarizationTask`, the 
 | length | enum | short<br/>medium<br/>long<br/> | medium | Can only set if abstractiveness=`abstractive` and in `DocumentSummarizationTask` |
 | sentenceCount | int | [1,20] | 3 | Can only set if abstractiveness=`extractive` | |
 | sortBy | enum | Offset,Rank | Offset | Can only set if abstractiveness=`extractive` | |
+| model-version | string | 2022-10-01-preview<br/>latest | latest |  | |
 
 ## Scenario Mapping
 Below table shows how to map summarization scenarios to different task and parameters.
@@ -121,17 +122,19 @@ For extractive summary, the summary context is just the extracted sentence text 
             "kind": "DocumentSummarizationTask",
             "taskName": "document extractive task 1",
             "parameters": {
+                "model-version": "latest",
                 "genre": "generic",
                 "aspects": ["generic"],
                 "abstractiveness": "extractive",
                 "sentenceCount": 3,
-                "sortBy": "Offset"
+                "sortBy": "offset"
             }
         },
         {
             "kind": "DocumentSummarizationTask",
             "taskName": "document abstractive task 2",
             "parameters": {
+                "model-version": "latest",
                 "genre": "generic",
                 "aspects": ["generic"],
                 "abstractiveness": "abstractive",
@@ -213,7 +216,7 @@ For extractive summary, the summary context is just the extracted sentence text 
                         }
                     ],
                     "errors": [],
-                    "modelVersion": "2021-08-01"
+                    "modelVersion": "2022-10-01-preview"
                 }
             }
         ]
@@ -293,6 +296,7 @@ For extractive summary, the summary context is just the extracted sentence text 
             "taskName": "Issue and Resolution Task 1",
             "kind": "ConversationalSummarizationTask",
             "parameters": {
+                "model-version": "latest",
                 "genre": "callcenter",
                 "abstractiveness": "abstractive",
                 "aspects": [
@@ -305,6 +309,7 @@ For extractive summary, the summary context is just the extracted sentence text 
             "taskName": "Chapters and Notes Task 2",
             "kind": "ConversationalSummarizationTask",
             "parameters": {
+                "model-version": "latest",
                 "genre": "generic",
                 "abstractiveness": "abstractive",
                 "aspects": [
@@ -375,7 +380,7 @@ For extractive summary, the summary context is just the extracted sentence text 
                         }
                     ],
                     "errors": [],
-                    "modelVersion": "2022-05-15-preview"
+                    "modelVersion": "2022-10-01-preview"
                 }
             },
             {
@@ -431,7 +436,7 @@ For extractive summary, the summary context is just the extracted sentence text 
                         }
                     ],
                     "errors": [],
-                    "modelVersion": "2022-05-15-preview"
+                    "modelVersion": "2022-10-01-preview"
                 }
             }
         ]
