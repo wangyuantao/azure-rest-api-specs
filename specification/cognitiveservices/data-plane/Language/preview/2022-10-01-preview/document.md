@@ -180,19 +180,37 @@ For extractive summary, the summary context is just the extracted sentence text 
                                     "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
                                     "rankScore": 1.0,
                                     "offset": 0,
-                                    "length": 160
+                                    "length": 160,
+                                    "contexts": [
+                                        {
+                                            "offset": 0,
+                                            "length": 160
+                                        }
+                                    ]
                                 },
                                 {
                                     "text": "In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z).",
-                                    "rankScore": 0.9582327572675664,
+                                    "rankScore": 0.9582327572675664,                                    
                                     "offset": 324,
-                                    "length": 192
+                                    "length": 192,
+                                    "contexts": [
+                                        {
+                                            "offset": 324,
+                                            "length": 192
+                                        }
+                                    ]
                                 },
                                 {
                                     "text": "At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
                                     "rankScore": 0.9294747193132348,
                                     "offset": 517,
-                                    "length": 203
+                                    "length": 203,
+                                    "contexts": [
+                                        {
+                                            "offset": 517,
+                                            "length": 203
+                                        }
+                                    ]
                                 }
                             ],
                             "warnings": []
@@ -212,9 +230,13 @@ For extractive summary, the summary context is just the extracted sentence text 
                             "id": "1",
                             "summaries": [
                                 {
-                                    "offset": 0,
-                                    "length": 1629,
-                                    "text": "Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration."
+                                    "text": "Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration.",
+                                    "contexts": [
+                                        {
+                                            "offset": 0,
+                                            "length": 1629,
+                                        }
+                                    ]
                                 }
                             ],
                             "warnings": []
@@ -356,26 +378,42 @@ For extractive summary, the summary context is just the extracted sentence text 
                             "summaries": [
                                 {
                                     "context": [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7"
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        },
+                                        {
+                                            "itemId": "(omitted 3..6)7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
                                     ],
                                     "aspect": "issue",
                                     "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
                                 },
                                 {
                                     "context": [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7"
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        },
+                                        {
+                                            "itemId": "(omitted 3..6)7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
                                     ],
                                     "aspect": "resolution",
                                     "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
@@ -400,38 +438,64 @@ For extractive summary, the summary context is just the extracted sentence text 
                             "summaries": [
                                 {
                                     "context": [
-                                        "1",
-                                        "2",
-                                        "3"
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        }
                                     ],
                                     "aspect": "title",
                                     "text": "Machine Connection Prompting"
                                 },
                                 {
                                     "context": [
-                                        "1",
-                                        "2",
-                                        "3"
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        }
                                     ],
                                     "aspect": "generic",
                                     "text": "Customer_1 inqueried the wifi connection issue."
                                 },
                                 {
                                     "context": [
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7"
+                                        {
+                                            "itemId": "4",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "(omitted 5,6)7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
                                     ],
                                     "aspect": "title",
                                     "text": "Contoso App"
                                 },
                                 {
                                     "context": [
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7"
+                                        {
+                                            "itemId": "4",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "(omitted 5,6)7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
                                     ],
                                     "aspect": "generic",
                                     "text": "Agent_1 asked Customer_1 to check the Contoso app."
