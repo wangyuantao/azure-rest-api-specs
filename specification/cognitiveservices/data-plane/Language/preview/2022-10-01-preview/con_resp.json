@@ -7,56 +7,151 @@
     "errors": [],
     "displayName": "Analyze conversations from 123",
     "tasks": {
-        "completed": 1,
+        "completed": 2,
         "failed": 0,
         "inProgress": 0,
-        "total": 1,
+        "total": 2,
         "items": [
             {
                 "kind": "conversationalSummarizationResults",
-                "taskName": "analyze 1",
+                "taskName": "Issue and Resolution Task 1",
                 "lastUpdateDateTime": "2022-05-31T16:52:59.85913Z",
                 "status": "succeeded",
                 "results": {
                     "conversations": [
                         {
                             "id": "conversation1",
-                            "segments": [
+                            "summaries": [
                                 {
-                                    "ids": [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7"
-                                    ],
-                                    "summaries": [
+                                    "context": [
                                         {
-                                            "aspect": "issue",
-                                            "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
                                         },
                                         {
-                                            "aspect": "resolution",
-                                            "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
                                         },
                                         {
-                                            "aspect": "generalTitle",
-                                            "text": "Machine Connection Prompting"
-                                        },
-                                        {
-                                            "aspect": "generalSummary",
-                                            "text": "Customer_1 asked the wifi connection issue, and Agent_1 asked Customer_1 to check the Contoso app."
+                                            "itemId": "7",
+                                            "offset": 0,
+                                            "length": 130
                                         }
-                                    ]
+                                    ],
+                                    "summaryAspect": "Issue",
+                                    "text": "Customer tried to set up wifi connection for Smart Brew 300 machine, but it didn't work"
+                                },
+                                {
+                                    "context": [
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        },
+                                        {
+                                            "itemId": "7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
+                                    ],
+                                    "summaryAspect": "Resolution",
+                                    "text": "Asked customer to try the following steps | Asked customer for the power light | Checked if the app is prompting to connect to the machine | Transferred the call to a tech support"
                                 }
                             ],
                             "warnings": []
                         }
                     ],
                     "errors": [],
-                    "modelVersion": "2022-05-15-preview"
+                    "modelVersion": "2022-10-01-preview"
+                }
+            },
+            {
+                "kind": "conversationalSummarizationResults",
+                "taskName": "Chapters and Notes Task 2",
+                "lastUpdateDateTime": "2022-05-31T16:52:59.85913Z",
+                "status": "succeeded",
+                "results": {
+                    "conversations": [
+                        {
+                            "id": "conversation1",
+                            "summaries": [
+                                {
+                                    "context": [
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        }
+                                    ],
+                                    "summaryAspect": "ChapterTitle",
+                                    "text": "Machine Connection Prompting"
+                                },
+                                {
+                                    "context": [
+                                        {
+                                            "itemId": "1",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "2",
+                                            "offset": 0,
+                                            "length": 129
+                                        }
+                                    ],
+                                    "summaryAspect": "Generic",
+                                    "text": "Customer_1 asked the wifi connection issue."
+                                },
+                                {
+                                    "context": [
+                                        {
+                                            "itemId": "4",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
+                                    ],
+                                    "summaryAspect": "ChapterTitle",
+                                    "text": "Contoso App"
+                                },
+                                {
+                                    "context": [
+                                        {
+                                            "itemId": "4",
+                                            "offset": 0,
+                                            "length": 128
+                                        },
+                                        {
+                                            "itemId": "7",
+                                            "offset": 0,
+                                            "length": 130
+                                        }
+                                    ],
+                                    "summaryAspect": "Generic",
+                                    "text": "Agent_1 asked Customer_1 to check the Contoso app."
+                                }
+                            ],
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "2022-10-01-preview"
                 }
             }
         ]

@@ -14,30 +14,45 @@
         "items": [
             {
                 "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
-                "taskName": "analyze 1",
+                "taskName": "document extractive summarization task 1",
                 "state": "succeeded",
                 "results": {
                     "documents": [
                         {
                             "id": "1",
-                            "sentences": [
+                            "summaries": [
                                 {
+                                    "summaryAspect": "Generic",
                                     "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
                                     "rankScore": 1.0,
-                                    "offset": 0,
-                                    "length": 160
+                                    "contexts": [
+                                        {
+                                            "offset": 0,
+                                            "length": 160
+                                        }
+                                    ]
                                 },
                                 {
+                                    "aspect": "Generic",
                                     "text": "In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z).",
                                     "rankScore": 0.9582327572675664,
-                                    "offset": 324,
-                                    "length": 192
+                                    "contexts": [
+                                        {
+                                            "offset": 324,
+                                            "length": 192
+                                        }
+                                    ]
                                 },
                                 {
+                                    "aspect": "Generic",
                                     "text": "At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
                                     "rankScore": 0.9294747193132348,
-                                    "offset": 517,
-                                    "length": 203
+                                    "contexts": [
+                                        {
+                                            "offset": 517,
+                                            "length": 203
+                                        }
+                                    ]
                                 }
                             ],
                             "warnings": []
@@ -49,24 +64,29 @@
             },
             {
                 "lastUpdateDateTime": "2021-08-24T19:15:48.0011189Z",
-                "taskName": "analyze 2",
+                "taskName": "Document abstractive summarization task 2",
                 "state": "succeeded",
                 "results": {
                     "documents": [
                         {
                             "id": "1",
-                            "segments": [
+                            "summaries": [
                                 {
-                                    "offset": 0,
-                                    "length": 1629,
-                                    "text": "Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration."
+                                    "aspect": "Generic",
+                                    "text": "Microsoft have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. The breakthroughs provided strong signals toward ambitious aspiration.",
+                                    "contexts": [
+                                        {
+                                            "offset": 15,
+                                            "length": 1629
+                                        }
+                                    ]
                                 }
                             ],
                             "warnings": []
                         }
                     ],
                     "errors": [],
-                    "modelVersion": "2021-08-01"
+                    "modelVersion": "2022-10-01-preview"
                 }
             }
         ]

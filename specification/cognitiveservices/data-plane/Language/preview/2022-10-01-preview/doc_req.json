@@ -10,22 +10,28 @@
     },
     "tasks": [
         {
-            "kind": "ExtractiveSummarizationTask",
-            "taskName": "analyze 1",
+            "kind": "DocumentSummarizationTask",
+            "taskName": "Document extractive summarization task 1",
             "parameters": {
-                "model-version": "latest",
+                "approach": "Extractive",
+                "summaryAspects": [
+                    "Generic"
+                ],
                 "sentenceCount": 3,
-                "sortBy": "Offset"
+                "sortBy": "Offset",
+                "model-version": "latest"
             }
         },
         {
-            "kind": "AbstractiveSummarizationTasks",
-            "taskName": "analyze 2",
+            "kind": "DocumentSummarizationTask",
+            "taskName": "Document abstractive summarization task 2",
             "parameters": {
-                "model-version": "latest",
-                "segmentationOptions": {
-                    "enabled": false
-                }
+                "approach": "Abstractive",
+                "summaryAspects": [
+                    "Generic"
+                ],
+                "length": "Long",
+                "model-version": "latest"
             }
         }
     ]

@@ -25,30 +25,35 @@
                         "text": "I’m sorry to hear that. Let’s see what we can do to fix this issue. Could you please try the following steps for me? First, could you push the wifi connection button, hold for 3 seconds, then let me know if the power light is slowly blinking on and off every second?",
                         "id": "3",
                         "role": "Agent",
+                        "startTime": "00:00:22",
                         "participantId": "Agent_1"
                     },
                     {
                         "text": "Yes, I pushed the wifi connection button, and now the power light is slowly blinking.",
                         "id": "4",
                         "role": "Customer",
+                        "startTime": "00:00:25",
                         "participantId": "Customer_1"
                     },
                     {
                         "text": "Great. Thank you! Now, please check in your Contoso Coffee app. Does it prompt to ask you to connect with the machine?",
                         "id": "5",
                         "role": "Agent",
+                        "startTime": "00:00:29",
                         "participantId": "Agent_1"
                     },
                     {
                         "text": "No. Nothing happened.",
                         "id": "6",
                         "role": "Customer",
+                        "startTime": "00:00:30",
                         "participantId": "Customer_1"
                     },
                     {
                         "text": "I’m very sorry to hear that. Let me see if there’s another way to fix the issue. Please hold on for a minute.",
                         "id": "7",
                         "role": "Agent",
+                        "startTime": "00:00:35",
                         "participantId": "Agent_1"
                     }
                 ]
@@ -57,19 +62,27 @@
     },
     "tasks": [
         {
-            "taskName": "analyze 1",
+            "taskName": "Issue and Resolution Task 1",
             "kind": "ConversationalSummarizationTask",
             "parameters": {
-                "modelVersion": "latest",
-                "segmentationOptions": {
-                    "enabled": false
-                },
+                "approach": "abstractive",
                 "summaryAspects": [
-                    "Issue",
-                    "Resolution",
-                    "GeneralTitle",
-                    "GeneralSummary"
-                ]
+                    "issue",
+                    "resolution"
+                ],
+                "model-version": "latest"
+            }
+        },
+        {
+            "taskName": "Chapters and Notes Task 2",
+            "kind": "ConversationalSummarizationTask",
+            "parameters": {
+                "approach": "abstractive",
+                "summaryAspects": [
+                    "chapterTitle",
+                    "generic"
+                ],
+                "model-version": "latest"
             }
         }
     ]
