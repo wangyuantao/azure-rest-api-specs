@@ -1,0 +1,6 @@
+#autorest --version=2.0.4421 --reflect-api-versions --license-header=MICROSOFT_MIT_NO_VERSION --use=@microsoft.azure/autorest.csharp@2.3.82 --input-file="D:\azure-rest-api-specs\dev\cognitiveservices\data-plane\Language\readme.md" --output-folder="D:\MeetingMinutesAdHocTools\SumAPI\SDK" --csharp
+
+# autorest --version=2.0.4421 --csharp --reflect-api-versions --license-header=MICROSOFT_MIT_NO_VERSION --use=@microsoft.azure/autorest.csharp@2.3.82 --csharp-sdks-folder=/mnt/vss/_work/1/s/azure-sdk-for-net/sdk ../azure-rest-api-specs/dev/cognitiveservices/data-plane/Language/readme.md
+
+# autorest --version=2.0.4421 --reflect-api-versions --license-header=MICROSOFT_MIT_NO_VERSION --use=@microsoft.azure/autorest.csharp@2.3.82 "D:\azure-rest-api-specs\dev\cognitiveservices\data-plane\Language\readme.md" --output-folder="D:\MeetingMinutesAdHocTools\SumAPI\SDK" --csharp
+autorest --reflect-api-versions --license-header=MICROSOFT_MIT_NO_VERSION "D:\azure-rest-api-specs\dev\cognitiveservices\data-plane\Language\readme.md" --output-folder="D:\MeetingMinutesAdHocTools\SumAPI\SDK" --csharp

@@ -1,0 +1,118 @@
+{
+  "definitions": {
+    "TextAnalysisAuthoringProjectKind": {
+      "enum": [
+        "CustomSingleLabelClassification",
+        "CustomMultiLabelClassification",
+        "CustomEntityRecognition",
+        "CustomAbstractiveSummarization"
+      ],
+      "x-ms-enum": {
+        "values": [
+          {
+            "value": "CustomSingleLabelClassification",
+            "description": "For building a classification model to classify text using your own data. Each file will have only one label. For example, file 1 is classified as A and file 2 is classified as B."
+          },
+          {
+            "value": "CustomMultiLabelClassification",
+            "description": "For building a classification model to classify text using your own data. Each file can have one or many labels. For example, file 1 is classified as A, B, and C and file 2 is classified as B and C."
+          },
+          {
+            "value": "CustomEntityRecognition",
+            "description": "For building an extraction model to identify your domain categories using your own data."
+          },
+          {
+            "value": "CustomAbstractiveSummarization",
+            "description": "For building an abstractive summarization model using your own data."
+          }
+        ]
+      }
+    },
+    "TextAnalysisAuthoringCustomAbstractiveSummarizationEvaluationSummary": {
+      "description": "Represents the evaluation summary for a custom abstractive summarization project.",
+      "required": ["summarizationEvaluation"],
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TextAnalysisAuthoringEvaluationSummary"
+        }
+      ],
+      "properties": {
+        "summarizationEvaluation": {
+          "description": "Contains the data related to abstractive summarization evaluation.",
+          "$ref": "common.json#/definitions/AbstractiveSummarizationEvaluationSummary"
+        }
+      },
+      "x-ms-discriminator-value": "CustomAbstractiveSummarization",
+      "x-ms-client-name": "CustomAbstractiveSummarizationEvaluationSummary"
+    },
+    "TextAnalysisAuthoringExportedCustomAbstractiveSummarizationProjectAssets": {
+      "description": "Represents the exported assets for an abstractive summarization project.",
+      "type": "object",
+      "required": ["documents"],
+      "allOf": [
+        {
+          "$ref": "#/definitions/TextAnalysisAuthoringExportedProjectAssets"
+        }
+      ],
+      "properties": {
+        "documents": {
+          "description": "The list of documents belonging to the project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextAnalysisAuthoringExportedCustomAbstractiveSummarizationDocument"
+          }
+        }
+      },
+      "x-ms-discriminator-value": "CustomAbstractiveSummarization",
+      "x-ms-client-name": "ExportedCustomAbstractiveSummarizationProjectAssets"
+    },
+    "TextAnalysisAuthoringExportedCustomAbstractiveSummarizationDocument": {
+      "description": "Represents an exported document for a custom abstractive summarization project.",
+      "type": "object",
+      "required": ["documentLocation"],
+      "properties": {
+        "documentLocation": {
+          "description": "The location of the input document to be summarized. The blob content format is string, represent the document text.",
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "common.json#/definitions/ExportedCustomAbstractiveSummarizationDataItem"
+        }
+      ],
+      "x-ms-client-name": "ExportedCustomAbstractiveSummarizationDocument"
+    }
+  },
+  "parameters": {
+    "TextAnalysisAuthoringProjectKindQueryParameter": {
+      "enum": [
+        "CustomSingleLabelClassification",
+        "CustomMultiLabelClassification",
+        "CustomEntityRecognition",
+        "CustomAbstractiveSummarization"
+      ],
+      "x-ms-enum": {
+        "values": [
+          {
+            "value": "CustomSingleLabelClassification",
+            "description": "For building a classification model to classify text using your own data. Each file will have only one label. For example, file 1 is classified as A and file 2 is classified as B."
+          },
+          {
+            "value": "CustomMultiLabelClassification",
+            "description": "For building a classification model to classify text using your own data. Each file can have one or many labels. For example, file 1 is classified as A, B, and C and file 2 is classified as B and C."
+          },
+          {
+            "value": "CustomEntityRecognition",
+            "description": "For building an extraction model to identify your domain categories using your own data."
+          },
+          {
+            "value": "CustomAbstractiveSummarization",
+            "description": "For building an abstractive summarization model using your own data."
+          }
+        ]
+      }
+    }
+  }
+}
