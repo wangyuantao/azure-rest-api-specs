@@ -7,6 +7,8 @@ git checkout -b release-cognitiveservices-Language-2022-10-01
 ```
 cp -r <path_to_you_feature_branch>/dev/cognitiveservices/data-plane/Language/ specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/
 ```
+path_to_you_feature_branch is from another location where you clone the feature branch, for example: https://github.com/laramume/azure-rest-api-specs/tree/users/laramume/AddWarningsRequest
+
 
 * bump up version
 ```
@@ -14,7 +16,7 @@ cd specification/cognitiveservices/data-plane/Language/preview/2022-10-01-previe
 
 rm *.md
 
-find ./ -type f -name *.json -exec sed -i 's/2022-07-01-preview/2022-10-01-preview/g' {} \;
+find ./ -type f -exec sed -i 's/2022-07-01-preview/2022-10-01-preview/g' {} \;
 
 
 ```
