@@ -8,7 +8,16 @@ git checkout -b release-cognitiveservices-Language-2022-10-01
 cp -r <path_to_you_feature_branch>/dev/cognitiveservices/data-plane/Language/ specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/
 ```
 path_to_you_feature_branch is from another location where you clone the feature branch, for example: https://github.com/laramume/azure-rest-api-specs/tree/users/laramume/AddWarningsRequest
-
+In my test, it was
+```
+cp -r /d/tmp/azure-rest-api-specs/dev/cognitiveservices/data-plane/Language/ specification/cognitiveservices/data-plane/Language/preview/2022-10-01-preview/
+```
+where 
+```
+FAREAST+yuantw@ytp MINGW64 /d/tmp
+$ git clone https://github.com/laramume/azure-rest-api-specs.git
+git checkout users/laramume/AddWarningsRequest
+```
 
 * bump up version
 ```
