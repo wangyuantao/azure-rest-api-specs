@@ -30,7 +30,7 @@ find ./ -type f -exec sed -i 's/2022-07-01-preview/2022-10-01-preview/g' {} \;
 
 ```
 
-* manually edit readme.md
+* manually edit readme.md to trigger validation against Oct APIs.
 Example commit: https://github.com/Azure/azure-rest-api-specs/pull/20206/commits/8b423ae6d5bd227926d9dcb340aa0857a10520d4
 
 * publish
