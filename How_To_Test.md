@@ -39,3 +39,9 @@ git add
 git commit -m "test"
 ```
 * push and create draft PR
+
+
+Please note that some of the validation errors are being fixed by July release.
+https://github.com/Azure/azure-rest-api-specs/pull/19558
+Which will be merged to main branch /dev folder soon.
+So just make sure youre changes do not introduce additional validation errors.
