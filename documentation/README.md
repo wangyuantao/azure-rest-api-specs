@@ -115,7 +115,119 @@ Example JSON Response
 ```
 
 ### Conversation Chapters
-(Work in progress)
+1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
+```
+curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conversations/jobs?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>" \
+-d \
+' 
+{
+  "displayName": "Conversation Chapters Task Example",
+  "analysisInput": {
+    "conversations": [
+      {
+        "conversationItems": [
+          {
+            "text": "Hello, how can I help you?",
+            "modality": "text",
+            "id": "1",
+            "participantId": "Agent",
+            "role": "Agent"
+          },
+          {
+            "text": "How to upgrade Office? I am getting error messages the whole day.",
+            "modality": "text",
+            "id": "2",
+            "participantId": "Customer",
+            "role": "Customer"
+          },
+          {
+            "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+            "modality": "text",
+            "id": "3",
+            "participantId": "Agent",
+            "role": "Agent"
+          }
+        ],
+        "modality": "text",
+        "id": "conversation1",
+        "language": "en"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "taskName": "Conversation Chapters Task 1",
+      "kind": "ConversationalSummarizationTask",
+      "parameters": {
+        "summaryAspects": [
+          "chapterTitle"
+        ]
+      }
+    }
+  ]
+}
+'
+```
+2. Make the following changes in the command where needed:
+    - Replace the value `your-language-resource-key` with your key.
+    - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
+3. Open a command prompt window (for example: BASH).
+4. Paste the command from the text editor into the command prompt window, and then run the command.
+
+5. Get the `operation-location` from the response header. The value will look similar to the following URL:
+```
+https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/12345678-1234-1234-1234-12345678?api-version=2022-10-01-preview
+```
+6. To get the results of the request, use the following cURL command. Be sure to replace `<my-job-id>` with the GUID value you received from the previous `operation-location` response header:
+```
+curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/<my-job-id>?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>"
+```
+Example JSON Response
+```json
+{
+    "jobId": "c2c22761-7289-42dc-ace1-a392b0625819",
+    "lastUpdatedDateTime": "2022-09-08T19:21:20Z",
+    "createdDateTime": "2022-09-08T19:21:15Z",
+    "expirationDateTime": "2022-09-09T19:21:15Z",
+    "status": "succeeded",
+    "errors": [],
+    "displayName": "Conversation Chapters Task Example",
+    "tasks": {
+        "completed": 1,
+        "failed": 0,
+        "inProgress": 0,
+        "total": 1,
+        "items": [
+            {
+                "kind": "conversationalSummarizationResults",
+                "taskName": "Conversation Chapters Task 1",
+                "lastUpdateDateTime": "2022-09-08T19:21:20.5223454Z",
+                "status": "succeeded",
+                "results": {
+                    "conversations": [
+                        {
+                            "summaries": [
+                                {
+                                    "aspect": "ChapterTitle",
+                                    "text": "Upgrade to Office"
+                                }
+                            ],
+                            "id": "conversation1",
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "latest"
+                }
+            }
+        ]
+    }
+}
+```
 
 ### Conversation Narrative
 (ETA 9/16)
