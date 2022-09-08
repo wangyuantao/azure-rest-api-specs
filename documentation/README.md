@@ -10,7 +10,20 @@
     - Select `S` as pricing tier.
     - Create and note down the key and endpoint for later use.
 
-## Document Abstractive Summarization
+## Features
+[Document Abstractive Summarization](#document-abstractive-summarization)
+
+The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc.
+
+[Conversation Chapters](#conversation-chapters)
+
+The input is conversation transcript or chat messages. The output is chapters, each chapter contains a title and a context point to the input conversation. Use this feature to create a table of content of a conversation.
+
+[Conversation Narrative](#conversation-narrative)
+
+The input is also conversation transcript or chat messages. The output is summaries, each summary item contains a summary text and a context point to the input conversation. Use this feature to create call notes, meeting notes or chat summary.
+
+### Document Abstractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
 ```
 curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/jobs?api-version=2022-10-01-preview \
@@ -101,8 +114,8 @@ Example JSON Response
 }
 ```
 
-# Conversation Chapters
+### Conversation Chapters
 (Work in progress)
 
-# Conversation Narrative Summarization
-(Coming soon)
+### Conversation Narrative
+(ETA 9/16)
