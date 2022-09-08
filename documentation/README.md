@@ -50,11 +50,11 @@ https://<your-language-resource-endpoint>/language/analyze-text/jobs/12345678-12
 ```
 6. To get the results of the request, use the following cURL command. Be sure to replace `<my-job-id>` with the GUID value you received from the previous `operation-location` response header:
 ```
-curl -X GET    https://<your-language-resource-endpoint>/language/analyze-text/jobs/<my-job-id>?api-version=2022-10-01-preview \
+curl -X GET https://<your-language-resource-endpoint>/language/analyze-text/jobs/<my-job-id>?api-version=2022-10-01-preview \
 -H "Content-Type: application/json" \
 -H "Ocp-Apim-Subscription-Key: <your-language-resource-key>"
 ```
-# JSON Response
+Example JSON Response
 ```json
 {
     "jobId": "cd6418fe-db86-4350-aec1-f0d7c91442a6",
@@ -100,3 +100,9 @@ curl -X GET    https://<your-language-resource-endpoint>/language/analyze-text/j
     }
 }
 ```
+
+# Conversation Chapters
+(Work in progress)
+
+# Conversation Narrative Summarization
+(Coming soon)
