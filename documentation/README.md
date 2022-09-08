@@ -17,11 +17,11 @@ The input is a string of plain text. The output is one or a few sentences. Use t
 
 [Conversation Chapters](#conversation-chapters)
 
-The input is conversation transcript or chat messages. The output is chapters, each chapter contains a title and a context point to the input conversation. Use this feature to create a table of content of a conversation.
+The input is conversation transcript or chat messages. The output is chapter title.
 
 [Conversation Narrative](#conversation-narrative)
 
-The input is also conversation transcript or chat messages. The output is summaries, each summary item contains a summary text and a context point to the input conversation. Use this feature to create call notes, meeting notes or chat summary.
+The input is also conversation transcript or chat messages. The output is one or a few sentences of summary. Use this feature to create call notes, meeting notes or chat summary.
 
 ### Document Abstractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
