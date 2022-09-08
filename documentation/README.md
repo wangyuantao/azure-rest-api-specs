@@ -41,7 +41,7 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/
 2. Make the following changes in the command where needed:
     - Replace the value `your-language-resource-key` with your key.
     - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
-3. Open a command prompt window.
+3. Open a command prompt window (for example: BASH).
 4. Paste the command from the text editor into the command prompt window, and then run the command.
 
 5. Get the `operation-location` from the response header. The value will look similar to the following URL:
