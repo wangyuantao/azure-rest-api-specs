@@ -4,13 +4,14 @@
 1. The current version of cURL. 
 2. Azure subscription. 
     - Please tell us your Subscription ID first so we can add you to the allowedlist, because this is a public gated preview feature. Don't know your Azure Subscription ID? See article for help: https://aka.ms/get-subscription-id
-3. Create language resource via Azure portal.
-    - Use region `East US`
-    - Use `Standard` pricing tier.
-    - Note down the key and endpoint for later use.
+3. Create [Language resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesTextAnalytics) via Azure portal.
+    - Select the Subscription which is added into allowedlist.
+    - Select `East US` as Region.
+    - Select `S` as pricing tier.
+    - Create and note down the key and endpoint for later use.
 
 ## Document Abstractive Summarization
-1. Copy the command below into a text editor. The example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
+1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
 ```
 curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/jobs?api-version=2022-10-01-preview \
 -H "Content-Type: application/json" \
