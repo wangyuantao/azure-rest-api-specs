@@ -23,6 +23,8 @@ The input is conversation transcript or chat messages. The output is chapter tit
 
 The input is also conversation transcript or chat messages. The output is one or a few sentences of summary. Use this feature to create call notes, meeting notes or chat summary.
 
+See more [public available summarization features](https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/overview).
+
 ### Document Abstractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
 ```
