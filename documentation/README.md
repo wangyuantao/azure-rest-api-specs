@@ -418,7 +418,7 @@ Example JSON Response
     "expirationDateTime": "2022-09-09T19:21:15Z",
     "status": "succeeded",
     "errors": [],
-    "displayName": "Conversation Chapters Task Example",
+    "displayName": "Conversation Chapters Example",
     "tasks": {
         "completed": 1,
         "failed": 0,
@@ -427,7 +427,7 @@ Example JSON Response
         "items": [
             {
                 "kind": "conversationalSummarizationResults",
-                "taskName": "Conversation Chapters Task 1",
+                "taskName": "Conversation Task 1",
                 "lastUpdateDateTime": "2022-09-08T19:21:20.5223454Z",
                 "status": "succeeded",
                 "results": {
