@@ -281,7 +281,7 @@ Example JSON Response
     }
 }
 ```
-
+For long conversation, the model might segment it into multiple cohensive parts, and summarize each segment.
 There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
 
 ### Conversation Narrative
@@ -452,4 +452,5 @@ Example JSON Response
 }
 ```
 
+For long conversation, the model might segment it into multiple cohensive parts, and summarize each segment.
 There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
