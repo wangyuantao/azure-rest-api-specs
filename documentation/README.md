@@ -13,7 +13,7 @@
 ## Features
 [Document Abstractive Summarization](#document-abstractive-summarization)
 
-The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc.
+The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc. You can also control the output length by sentences count.
 
 [Conversation Chapters](#conversation-chapters)
 
@@ -47,7 +47,10 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/
   "tasks": [
     {
       "kind": "AbstractiveSummarization",
-      "taskName": "Document Abstractive Summarization Task 1"
+      "taskName": "Document Abstractive Summarization Task 1",
+      "parameters":{
+        "sentenceCount": 1
+      }
     }
   ]
 }
@@ -95,7 +98,7 @@ Example JSON Response
                         {
                             "summaries": [
                                 {
-                                    "text": "Microsoft has been on a quest to advance AI beyond existing techniques. As Chief Technology Officer of Azure AI Cognitive Services, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition. At the intersection of all three, there's magic—what we call XYZ-code—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
+                                    "text": "Microsoft's AI cognitive services team is developing a new approach to learning and understanding that combines the best of both worlds.",
                                     "contexts": [
                                         {
                                             "offset": 0,
@@ -115,6 +118,8 @@ Example JSON Response
     }
 }
 ```
+
+If you do not specify `parameters` `sentenceCount`, the model will predict output summary sentences count smartly.
 
 ### Conversation Chapters
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
