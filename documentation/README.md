@@ -134,22 +134,73 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
             "text": "Hello, how can I help you?",
             "modality": "text",
             "id": "1",
-            "participantId": "Agent",
-            "role": "Agent"
+            "participantId": "speaker1"
           },
           {
             "text": "How to upgrade Office? I am getting error messages the whole day.",
             "modality": "text",
             "id": "2",
-            "participantId": "Customer",
-            "role": "Customer"
+            "participantId": "speaker2"
           },
           {
             "text": "Press the upgrade button please. Then sign in and follow the instructions.",
             "modality": "text",
             "id": "3",
-            "participantId": "Agent",
-            "role": "Agent"
+            "participantId": "speaker1"
+          },
+          {
+            "text": "I've tried that but it didn't work.",
+            "modality": "text",
+            "id": "4",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "Can you describe the error you're seeing?",
+            "modality": "text",
+            "id": "5",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "It says something about invalid license.",
+            "modality": "text",
+            "id": "6",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "Please check that your license code is for the correct product version.",
+            "modality": "text",
+            "id": "7",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "My next question is about the recent conference.",
+            "modality": "text",
+            "id": "8",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "What are the highlights from the conference?",
+            "modality": "text",
+            "id": "9",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "You can find a recap of the announcements made at the conference on our website.",
+            "modality": "text",
+            "id": "10",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "What website are you referring to?",
+            "modality": "text",
+            "id": "11",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "You can find more information at contoso.com/news.",
+            "modality": "text",
+            "id": "12",
+            "participantId": "speaker1"
           }
         ],
         "modality": "text",
@@ -214,7 +265,7 @@ Example JSON Response
                         {
                             "summaries": [
                                 {
-                                    "aspect": "ChapterTitle",
+                                    "aspect": "chapterTitle",
                                     "text": "Upgrade to Office"
                                 }
                             ],
@@ -231,5 +282,174 @@ Example JSON Response
 }
 ```
 
+There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
+
 ### Conversation Narrative
-(ETA 9/16)
+
+1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
+```
+curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conversations/jobs?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>" \
+-d \
+' 
+{
+  "displayName": "Conversation Task Example",
+  "analysisInput": {
+    "conversations": [
+      {
+        "conversationItems": [
+
+          {
+            "text": "Hello, how can I help you?",
+            "modality": "text",
+            "id": "1",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "How to upgrade Office? I am getting error messages the whole day.",
+            "modality": "text",
+            "id": "2",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "Press the upgrade button please. Then sign in and follow the instructions.",
+            "modality": "text",
+            "id": "3",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "I've tried that but it didn't work.",
+            "modality": "text",
+            "id": "4",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "Can you describe the error you're seeing?",
+            "modality": "text",
+            "id": "5",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "It says something about invalid license.",
+            "modality": "text",
+            "id": "6",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "Please check that your license code is for the correct product version.",
+            "modality": "text",
+            "id": "7",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "My next question is about the recent conference.",
+            "modality": "text",
+            "id": "8",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "What are the highlights from the conference?",
+            "modality": "text",
+            "id": "9",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "You can find a recap of the announcements made at the conference on our website.",
+            "modality": "text",
+            "id": "10",
+            "participantId": "speaker1"
+          },
+          {
+            "text": "What website are you referring to?",
+            "modality": "text",
+            "id": "11",
+            "participantId": "speaker2"
+          },
+          {
+            "text": "You can find more information at contoso.com/news.",
+            "modality": "text",
+            "id": "12",
+            "participantId": "speaker1"
+          }
+        ],
+        "modality": "text",
+        "id": "conversation1",
+        "language": "en"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "taskName": "Conversation Task 1",
+      "kind": "ConversationalSummarizationTask",
+      "parameters": {
+        "summaryAspects": [
+          "narrative"
+        ]
+      }
+    }
+  ]
+}
+'
+```
+2. Make the following changes in the command where needed:
+    - Replace the value `your-language-resource-key` with your key.
+    - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
+3. Open a command prompt window (for example: BASH).
+4. Paste the command from the text editor into the command prompt window, and then run the command.
+
+5. Get the `operation-location` from the response header. The value will look similar to the following URL:
+```
+https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/12345678-1234-1234-1234-12345678?api-version=2022-10-01-preview
+```
+6. To get the results of the request, use the following cURL command. Be sure to replace `<my-job-id>` with the GUID value you received from the previous `operation-location` response header:
+```
+curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/<my-job-id>?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>"
+```
+Example JSON Response
+```json
+{
+    "jobId": "c2c22761-7289-42dc-ace1-a392b0625819",
+    "lastUpdatedDateTime": "2022-09-08T19:21:20Z",
+    "createdDateTime": "2022-09-08T19:21:15Z",
+    "expirationDateTime": "2022-09-09T19:21:15Z",
+    "status": "succeeded",
+    "errors": [],
+    "displayName": "Conversation Chapters Task Example",
+    "tasks": {
+        "completed": 1,
+        "failed": 0,
+        "inProgress": 0,
+        "total": 1,
+        "items": [
+            {
+                "kind": "conversationalSummarizationResults",
+                "taskName": "Conversation Chapters Task 1",
+                "lastUpdateDateTime": "2022-09-08T19:21:20.5223454Z",
+                "status": "succeeded",
+                "results": {
+                    "conversations": [
+                        {
+                            "summaries": [
+                                {
+                                    "aspect": "narrative",
+                                    "text": "speaker2 asks how to upgrade Office. speaker1 explains that the upgrade button is the correct product version."
+                                }
+                            ],
+                            "id": "conversation1",
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "latest"
+                }
+            }
+        ]
+    }
+}
+```
+
+There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
