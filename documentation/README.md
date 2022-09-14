@@ -125,7 +125,7 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
 -d \
 ' 
 {
-  "displayName": "Conversation Chapters Task Example",
+  "displayName": "Conversation Task Example",
   "analysisInput": {
     "conversations": [
       {
@@ -211,7 +211,7 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
   },
   "tasks": [
     {
-      "taskName": "Conversation Chapters Task 1",
+      "taskName": "Conversation Task 1",
       "kind": "ConversationalSummarizationTask",
       "parameters": {
         "summaryAspects": [
@@ -242,13 +242,13 @@ curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversat
 Example JSON Response
 ```json
 {
-    "jobId": "c2c22761-7289-42dc-ace1-a392b0625819",
-    "lastUpdatedDateTime": "2022-09-08T19:21:20Z",
-    "createdDateTime": "2022-09-08T19:21:15Z",
-    "expirationDateTime": "2022-09-09T19:21:15Z",
+    "jobId": "13efaec1-896e-4da9-8b61-19db8408f26a",
+    "lastUpdatedDateTime": "2022-09-14T16:39:10Z",
+    "createdDateTime": "2022-09-14T16:39:08Z",
+    "expirationDateTime": "2022-09-15T16:39:08Z",
     "status": "succeeded",
     "errors": [],
-    "displayName": "Conversation Chapters Task Example",
+    "displayName": "Conversation Task Example",
     "tasks": {
         "completed": 1,
         "failed": 0,
@@ -257,8 +257,8 @@ Example JSON Response
         "items": [
             {
                 "kind": "conversationalSummarizationResults",
-                "taskName": "Conversation Chapters Task 1",
-                "lastUpdateDateTime": "2022-09-08T19:21:20.5223454Z",
+                "taskName": "Conversation Task 1",
+                "lastUpdateDateTime": "2022-09-14T16:39:10.7359603Z",
                 "status": "succeeded",
                 "results": {
                     "conversations": [
@@ -266,7 +266,7 @@ Example JSON Response
                             "summaries": [
                                 {
                                     "aspect": "chapterTitle",
-                                    "text": "Upgrade to Office"
+                                    "text": "How to Upgrade Office"
                                 }
                             ],
                             "id": "conversation1",
@@ -299,7 +299,6 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
     "conversations": [
       {
         "conversationItems": [
-
           {
             "text": "Hello, how can I help you?",
             "modality": "text",
@@ -412,13 +411,13 @@ curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversat
 Example JSON Response
 ```json
 {
-    "jobId": "c2c22761-7289-42dc-ace1-a392b0625819",
-    "lastUpdatedDateTime": "2022-09-08T19:21:20Z",
-    "createdDateTime": "2022-09-08T19:21:15Z",
-    "expirationDateTime": "2022-09-09T19:21:15Z",
+    "jobId": "19561f16-abbc-430a-a50f-e2cdd7f3d998",
+    "lastUpdatedDateTime": "2022-09-14T16:42:35Z",
+    "createdDateTime": "2022-09-14T16:42:31Z",
+    "expirationDateTime": "2022-09-15T16:42:31Z",
     "status": "succeeded",
     "errors": [],
-    "displayName": "Conversation Chapters Example",
+    "displayName": "Conversation Task Example",
     "tasks": {
         "completed": 1,
         "failed": 0,
@@ -428,7 +427,7 @@ Example JSON Response
             {
                 "kind": "conversationalSummarizationResults",
                 "taskName": "Conversation Task 1",
-                "lastUpdateDateTime": "2022-09-08T19:21:20.5223454Z",
+                "lastUpdateDateTime": "2022-09-14T16:42:35.5714752Z",
                 "status": "succeeded",
                 "results": {
                     "conversations": [
