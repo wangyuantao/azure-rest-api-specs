@@ -17,7 +17,7 @@ The input is a string of plain text. The output is one or a few sentences. Use t
 
 [Conversation Chapters](#conversation-chapters)
 
-The input is conversation transcript or chat messages. The output is chapter title.
+The input is conversation transcript or chat messages. The output is chapter title. Use this feature to create table of content or bullet points of long conversation.
 
 [Conversation Narrative](#conversation-narrative)
 
