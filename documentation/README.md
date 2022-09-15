@@ -13,7 +13,7 @@
 ## Features
 [Document Abstractive Summarization](#document-abstractive-summarization)
 
-The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc. You can also control the output length by sentences count.
+The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc.
 
 [Conversation Chapters](#conversation-chapters)
 
@@ -47,10 +47,7 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/
   "tasks": [
     {
       "kind": "AbstractiveSummarization",
-      "taskName": "Document Abstractive Summarization Task 1",
-      "parameters":{
-        "sentenceCount": 1
-      }
+      "taskName": "Document Abstractive Summarization Task 1"
     }
   ]
 }
