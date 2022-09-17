@@ -3,7 +3,7 @@
 ## Prerequisites
 1. The current version of cURL. 
 2. Azure subscription. 
-    - Please tell us your Subscription ID first so we can add you to the allowlist, because this is a public gated preview feature. Don't know your Azure Subscription ID? See article for help: https://aka.ms/get-subscription-id
+    - Please email summarization@microsoft.com with your Subscription ID first so we can add you to the allowlist, because this is a public gated preview feature. Don't know your Azure Subscription ID? See article for help: https://aka.ms/get-subscription-id
 3. Create [Language resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesTextAnalytics) via Azure portal.
     - Select the Subscription which is added into allowedlist.
     - Select `East US` as region.
