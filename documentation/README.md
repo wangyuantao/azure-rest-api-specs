@@ -95,7 +95,7 @@ Example JSON Response
                         {
                             "summaries": [
                                 {
-                                    "text": "Microsoft's AI cognitive services team is developing a new approach to learning and understanding that combines the best of both worlds.",
+                                    "text": "Microsoft is taking a more holistic, human-centric approach to AI. We've developed a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We've achieved human performance on benchmarks in conversational speech recognition, machine translation, ...... and image captions.",
                                     "contexts": [
                                         {
                                             "offset": 0,
@@ -133,76 +133,46 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
       {
         "conversationItems": [
           {
-            "text": "Hello, how can I help you?",
-            "modality": "text",
+            "text": "Hello, you’re chatting with Rene. How may I help you?",
             "id": "1",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "How to upgrade Office? I am getting error messages the whole day.",
-            "modality": "text",
+            "text": "Hi, I tried to set up wifi connection for Smart Brew 300 espresso machine, but it didn’t work.",
             "id": "2",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Press the upgrade button please. Then sign in and follow the instructions.",
-            "modality": "text",
+            "text": "I’m sorry to hear that. Let’s see what we can do to fix this issue. Could you please try the following steps for me? First, could you push the wifi connection button, hold for 3 seconds, then let me know if the power light is slowly blinking on and off every second?",
             "id": "3",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "I've tried that but it didn't work.",
-            "modality": "text",
+            "text": "Yes, I pushed the wifi connection button, and now the power light is slowly blinking.",
             "id": "4",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Can you describe the error you're seeing?",
-            "modality": "text",
+            "text": "Great. Thank you! Now, please check in your Contoso Coffee app. Does it prompt to ask you to connect with the machine? ",
             "id": "5",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "It says something about invalid license.",
-            "modality": "text",
+            "text": "No. Nothing happened.",
             "id": "6",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Please check that your license code is for the correct product version.",
-            "modality": "text",
+            "text": "I’m very sorry to hear that. Let me see if there’s another way to fix the issue. Please hold on for a minute.",
             "id": "7",
-            "participantId": "speaker1"
-          },
-          {
-            "text": "My next question is about the recent conference.",
-            "modality": "text",
-            "id": "8",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "What are the highlights from the conference?",
-            "modality": "text",
-            "id": "9",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "You can find a recap of the announcements made at the conference on our website.",
-            "modality": "text",
-            "id": "10",
-            "participantId": "speaker1"
-          },
-          {
-            "text": "What website are you referring to?",
-            "modality": "text",
-            "id": "11",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "You can find more information at contoso.com/news.",
-            "modality": "text",
-            "id": "12",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           }
         ],
         "modality": "text",
@@ -268,7 +238,7 @@ Example JSON Response
                             "summaries": [
                                 {
                                     "aspect": "chapterTitle",
-                                    "text": "How to Upgrade Office"
+                                    "text": "Smart Brew 300 Espresso Machine WiFi Connection"
                                 }
                             ],
                             "id": "conversation1",
@@ -302,76 +272,46 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
       {
         "conversationItems": [
           {
-            "text": "Hello, how can I help you?",
-            "modality": "text",
+            "text": "Hello, you’re chatting with Rene. How may I help you?",
             "id": "1",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "How to upgrade Office? I am getting error messages the whole day.",
-            "modality": "text",
+            "text": "Hi, I tried to set up wifi connection for Smart Brew 300 espresso machine, but it didn’t work.",
             "id": "2",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Press the upgrade button please. Then sign in and follow the instructions.",
-            "modality": "text",
+            "text": "I’m sorry to hear that. Let’s see what we can do to fix this issue. Could you please try the following steps for me? First, could you push the wifi connection button, hold for 3 seconds, then let me know if the power light is slowly blinking on and off every second?",
             "id": "3",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "I've tried that but it didn't work.",
-            "modality": "text",
+            "text": "Yes, I pushed the wifi connection button, and now the power light is slowly blinking.",
             "id": "4",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Can you describe the error you're seeing?",
-            "modality": "text",
+            "text": "Great. Thank you! Now, please check in your Contoso Coffee app. Does it prompt to ask you to connect with the machine? ",
             "id": "5",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           },
           {
-            "text": "It says something about invalid license.",
-            "modality": "text",
+            "text": "No. Nothing happened.",
             "id": "6",
-            "participantId": "speaker2"
+            "role": "Customer",
+            "participantId": "Customer_1"
           },
           {
-            "text": "Please check that your license code is for the correct product version.",
-            "modality": "text",
+            "text": "I’m very sorry to hear that. Let me see if there’s another way to fix the issue. Please hold on for a minute.",
             "id": "7",
-            "participantId": "speaker1"
-          },
-          {
-            "text": "My next question is about the recent conference.",
-            "modality": "text",
-            "id": "8",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "What are the highlights from the conference?",
-            "modality": "text",
-            "id": "9",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "You can find a recap of the announcements made at the conference on our website.",
-            "modality": "text",
-            "id": "10",
-            "participantId": "speaker1"
-          },
-          {
-            "text": "What website are you referring to?",
-            "modality": "text",
-            "id": "11",
-            "participantId": "speaker2"
-          },
-          {
-            "text": "You can find more information at contoso.com/news.",
-            "modality": "text",
-            "id": "12",
-            "participantId": "speaker1"
+            "role": "Agent",
+            "participantId": "Agent_1"
           }
         ],
         "modality": "text",
@@ -437,7 +377,7 @@ Example JSON Response
                             "summaries": [
                                 {
                                     "aspect": "narrative",
-                                    "text": "speaker2 asks how to upgrade Office. speaker1 explains that the upgrade button is the correct product version."
+                                    "text": "Agent_1 helps customer to set up wifi connection for Smart Brew 300 espresso machine."
                                 }
                             ],
                             "id": "conversation1",
