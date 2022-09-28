@@ -15,6 +15,10 @@
 
 The input is a string of plain text. The output is one or a few sentences. Use this feature to summarize news article, scientific paper, etc.
 
+[Document Extractive Summarization](#document-extractive-summarization)
+
+The input is a string of plain text. The output is one or a few sentences from the input. This is an existing feature but the model quality is improved in Oct Preview API. Also, we encourage customers migrate from the legacy Text Analytics endpoint to this Language endpoint.
+
 [Conversation Chapters](#conversation-chapters)
 
 The input is conversation transcript or chat messages. The output is chapter title. Use this feature to create table of content or bullet points of long conversation.
@@ -116,7 +120,131 @@ Example JSON Response
 }
 ```
 
-If you do not specify `parameters` `sentenceCount`, the model will predict output summary sentences count smartly.
+If you do specify `parameters` `sentenceCount`, the model will try to predict the summaries in the length you specified. Note that the `sentenceCount` is just the approximate of sentences count of output summary.
+
+### Document Extractive Summarization
+1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
+```
+curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/jobs?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>" \
+-d \
+' 
+{
+  "displayName": "Document ext Summarization Task Example",
+  "analysisInput": {
+    "documents": [
+      {
+        "id": "1",
+        "language": "en",
+        "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "kind": "ExtractiveSummarization",
+      "taskName": "Document Extractive Summarization Task 1",
+      "parameters": {
+        "sentenceCount": 6
+      }
+    }
+  ]
+}
+
+'
+```
+2. Make the following changes in the command where needed:
+    - Replace the value `your-language-resource-key` with your key.
+    - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
+3. Open a command prompt window (for example: BASH).
+4. Paste the command from the text editor into the command prompt window, and then run the command.
+
+5. Get the `operation-location` from the response header. The value will look similar to the following URL:
+```
+https://<your-language-resource-endpoint>/language/analyze-text/jobs/12345678-1234-1234-1234-12345678?api-version=2022-10-01-preview
+```
+6. To get the results of the request, use the following cURL command. Be sure to replace `<my-job-id>` with the GUID value you received from the previous `operation-location` response header:
+```
+curl -X GET https://<your-language-resource-endpoint>/language/analyze-text/jobs/<my-job-id>?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>"
+```
+Example JSON Response
+```json
+{
+    "jobId": "56e43bcf-70d8-44d2-a7a7-131f3dff069f",
+    "lastUpdateDateTime": "2022-09-28T19:33:43Z",
+    "createdDateTime": "2022-09-28T19:33:42Z",
+    "expirationDateTime": "2022-09-29T19:33:42Z",
+    "status": "succeeded",
+    "errors": [],
+    "displayName": "Document ext Summarization Task Example",
+    "tasks": {
+        "completed": 1,
+        "failed": 0,
+        "inProgress": 0,
+        "total": 1,
+        "items": [
+            {
+                "kind": "ExtractiveSummarizationLROResults",
+                "taskName": "Document Extractive Summarization Task 1",
+                "lastUpdateDateTime": "2022-09-28T19:33:43.6712507Z",
+                "status": "succeeded",
+                "results": {
+                    "documents": [
+                        {
+                            "id": "1",
+                            "sentences": [
+                                {
+                                    "text": "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding.",
+                                    "rankScore": 0.69,
+                                    "offset": 0,
+                                    "length": 160
+                                },
+                                {
+                                    "text": "In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z).",
+                                    "rankScore": 0.66,
+                                    "offset": 324,
+                                    "length": 192
+                                },
+                                {
+                                    "text": "At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better.",
+                                    "rankScore": 0.63,
+                                    "offset": 517,
+                                    "length": 203
+                                },
+                                {
+                                    "text": "We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages.",
+                                    "rankScore": 1.0,
+                                    "offset": 721,
+                                    "length": 134
+                                },
+                                {
+                                    "text": "The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today.",
+                                    "rankScore": 0.74,
+                                    "offset": 856,
+                                    "length": 159
+                                },
+                                {
+                                    "text": "I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
+                                    "rankScore": 0.49,
+                                    "offset": 1481,
+                                    "length": 148
+                                }
+                            ],
+                            "warnings": []
+                        }
+                    ],
+                    "errors": [],
+                    "modelVersion": "latest"
+                }
+            }
+        ]
+    }
+}
+```
+
 
 ### Conversation Chapters
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
