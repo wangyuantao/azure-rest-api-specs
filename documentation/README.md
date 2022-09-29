@@ -543,3 +543,172 @@ Example JSON Response
 ```
 For long conversation, the model might segment it into multiple cohensive parts, and summarize each segment.
 The `contexts` field for each summary indicates from which range of the input conversation we generated the summary.
+
+### Issue Resolution Summarization
+
+
+1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
+```
+curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conversations/jobs?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>" \
+-d \
+' 
+{
+  "displayName": "Conversation Task Example",
+  "analysisInput": {
+    "conversations": [
+      {
+        "conversationItems": [
+          {
+            "text": "Hello, you’re chatting with Rene. How may I help you?",
+            "id": "1",
+            "role": "Agent",
+            "participantId": "Agent_1"
+          },
+          {
+            "text": "Hi, I tried to set up wifi connection for Smart Brew 300 espresso machine, but it didn’t work.",
+            "id": "2",
+            "role": "Customer",
+            "participantId": "Customer_1"
+          },
+          {
+            "text": "I’m sorry to hear that. Let’s see what we can do to fix this issue. Could you please try the following steps for me? First, could you push the wifi connection button, hold for 3 seconds, then let me know if the power light is slowly blinking on and off every second?",
+            "id": "3",
+            "role": "Agent",
+            "participantId": "Agent_1"
+          },
+          {
+            "text": "Yes, I pushed the wifi connection button, and now the power light is slowly blinking.",
+            "id": "4",
+            "role": "Customer",
+            "participantId": "Customer_1"
+          },
+          {
+            "text": "Great. Thank you! Now, please check in your Contoso Coffee app. Does it prompt to ask you to connect with the machine? ",
+            "id": "5",
+            "role": "Agent",
+            "participantId": "Agent_1"
+          },
+          {
+            "text": "No. Nothing happened.",
+            "id": "6",
+            "role": "Customer",
+            "participantId": "Customer_1"
+          },
+          {
+            "text": "I’m very sorry to hear that. Let me see if there’s another way to fix the issue. Please hold on for a minute.",
+            "id": "7",
+            "role": "Agent",
+            "participantId": "Agent_1"
+          }
+        ],
+        "modality": "text",
+        "id": "conversation1",
+        "language": "en"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "taskName": "Conversation Task 1",
+      "kind": "ConversationalSummarizationTask",
+      "parameters": {
+        "summaryAspects": ["issue"]
+      }
+    },
+    {
+      "taskName": "Conversation Task 2",
+      "kind": "ConversationalSummarizationTask",
+      "parameters": {
+        "summaryAspects": ["resolution"],
+        "sentenceCount": 1
+      }
+    }
+  ]
+}
+'
+```
+
+Note if `summaryAspects` is `resolution`, you can optionaly specify `sentenceCount` parameter to control the output summary length. If you don't specify the `sentenceCount`, the model will smartly determine the summary length. Only `resolution` aspect supports `sentenceCount`.
+
+2. Make the following changes in the command where needed:
+    - Replace the value `your-language-resource-key` with your key.
+    - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
+3. Open a command prompt window (for example: BASH).
+4. Paste the command from the text editor into the command prompt window, and then run the command.
+
+5. Get the `operation-location` from the response header. The value will look similar to the following URL:
+```
+https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/12345678-1234-1234-1234-12345678?api-version=2022-10-01-preview
+```
+6. To get the results of the request, use the following cURL command. Be sure to replace `<my-job-id>` with the GUID value you received from the previous `operation-location` response header:
+```
+curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversations/jobs/<my-job-id>?api-version=2022-10-01-preview \
+-H "Content-Type: application/json" \
+-H "Ocp-Apim-Subscription-Key: <your-language-resource-key>"
+```
+Example JSON Response
+```json
+{
+  "jobId": "02ec5134-78bf-45da-8f63-d7410291ec40",
+  "lastUpdatedDateTime": "2022-09-29T17:43:02Z",
+  "createdDateTime": "2022-09-29T17:43:01Z",
+  "expirationDateTime": "2022-09-30T17:43:01Z",
+  "status": "succeeded",
+  "errors": [],
+  "displayName": "Conversation Task Example",
+  "tasks": {
+    "completed": 2,
+    "failed": 0,
+    "inProgress": 0,
+    "total": 2,
+    "items": [
+      {
+        "kind": "conversationalSummarizationResults",
+        "taskName": "Conversation Task 1",
+        "lastUpdateDateTime": "2022-09-29T17:43:02.3584219Z",
+        "status": "succeeded",
+        "results": {
+          "conversations": [
+            {
+              "summaries": [
+                {
+                  "aspect": "issue",
+                  "text": "Customer wants to connect their Smart Brew 300 to their Wi-Fi. | The Wi-Fi connection didn't work."
+                }
+              ],
+              "id": "conversation1",
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "latest"
+        }
+      },
+      {
+        "kind": "conversationalSummarizationResults",
+        "taskName": "Conversation Task 2",
+        "lastUpdateDateTime": "2022-09-29T17:43:02.2099663Z",
+        "status": "succeeded",
+        "results": {
+          "conversations": [
+            {
+              "summaries": [
+                {
+                  "aspect": "resolution",
+                  "text": "Asked customer to check if the power light is blinking on and off every second."
+                }
+              ],
+              "id": "conversation1",
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "latest"
+        }
+      }
+    ]
+  }
+}
+```
