@@ -53,12 +53,18 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-text/
   "tasks": [
     {
       "kind": "AbstractiveSummarization",
-      "taskName": "Document Abstractive Summarization Task 1"
+      "taskName": "Document Abstractive Summarization Task 1",
+      "parameters": {
+        "sentenceCount": 1
+      }
     }
   ]
 }
 '
 ```
+
+If you do not specify `parameters` `sentenceCount`, the model will try to predict the summaries in the length you specified. Note that the `sentenceCount` is just the approximate of sentences count of output summary, in range 1 to 20.
+
 2. Make the following changes in the command where needed:
     - Replace the value `your-language-resource-key` with your key.
     - Replace the first part of the request URL `your-language-resource-endpoint` with your endpoint URL.
@@ -78,51 +84,46 @@ curl -X GET https://<your-language-resource-endpoint>/language/analyze-text/jobs
 Example JSON Response
 ```json
 {
-    "jobId": "cd6418fe-db86-4350-aec1-f0d7c91442a6",
-    "lastUpdateDateTime": "2022-09-08T16:45:14Z",
-    "createdDateTime": "2022-09-08T16:44:53Z",
-    "expirationDateTime": "2022-09-09T16:44:53Z",
-    "status": "succeeded",
-    "errors": [],
-    "displayName": "Document Abstractive Summarization Task Example",
-    "tasks": {
-        "completed": 1,
-        "failed": 0,
-        "inProgress": 0,
-        "total": 1,
-        "items": [
+  "jobId": "b5096b51-6b8e-45a4-aea1-a943045743f9",
+  "lastUpdateDateTime": "2022-09-29T18:31:36Z",
+  "createdDateTime": "2022-09-29T18:31:34Z",
+  "expirationDateTime": "2022-09-30T18:31:34Z",
+  "status": "succeeded",
+  "errors": [],
+  "displayName": "Document Abstractive Summarization Task Example",
+  "tasks": {
+    "completed": 1,
+    "failed": 0,
+    "inProgress": 0,
+    "total": 1,
+    "items": [
+      {
+        "kind": "AbstractiveSummarizationLROResults",
+        "taskName": "Document Abstractive Summarization Task 1",
+        "lastUpdateDateTime": "2022-09-29T18:31:36.0165401Z",
+        "status": "succeeded",
+        "results": {
+          "documents": [
             {
-                "kind": "AbstractiveSummarizationLROResults",
-                "taskName": "Document Abstractive Summarization Task 1",
-                "lastUpdateDateTime": "2022-09-08T16:45:14.0717206Z",
-                "status": "succeeded",
-                "results": {
-                    "documents": [
-                        {
-                            "summaries": [
-                                {
-                                    "text": "Microsoft is taking a more holistic, human-centric approach to AI. We've developed a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We've achieved human performance on benchmarks in conversational speech recognition, machine translation, ...... and image captions.",
-                                    "contexts": [
-                                        {
-                                            "offset": 0,
-                                            "length": 247
-                                        }
-                                    ]
-                                }
-                            ],
-                            "id": "1"
-                        }
-                    ],
-                    "errors": [],
-                    "modelVersion": "latest"
+              "summaries": [
+                {
+                  "text": "Microsoft is taking a more holistic, human-centric approach to learning and understanding.",
+                  "contexts": [{ "offset": 0, "length": 1629 }]
                 }
+              ],
+              "id": "1"
             }
-        ]
-    }
+          ],
+          "errors": [],
+          "modelVersion": "latest"
+        }
+      }
+    ]
+  }
 }
+
 ```
 
-If you do specify `parameters` `sentenceCount`, the model will try to predict the summaries in the length you specified. Note that the `sentenceCount` is just the approximate of sentences count of output summary, in range 1 to 20.
 
 ### Document Extractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
