@@ -25,9 +25,11 @@ The input is conversation transcript or chat messages. The output is chapter tit
 
 [Conversation Narrative](#conversation-narrative)
 
-The input is also conversation transcript or chat messages. The output is one or a few sentences of summary. Use this feature to create call notes, meeting notes or chat summary.
+The input is also conversation transcript or chat messages. The output is one or a few sentences of summary. Use this feature to create call notes, meeting notes or chat summary. `conversationItems` `participantId` is required.
 
-See more [public available summarization features](https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/overview).
+[Issue Resolution Summarization](#issue-resolution-summarization)
+
+The input is also conversation transcript or chat messages. `conversationItems` `role` is required.
 
 ### Document Abstractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
@@ -120,7 +122,7 @@ Example JSON Response
 }
 ```
 
-If you do specify `parameters` `sentenceCount`, the model will try to predict the summaries in the length you specified. Note that the `sentenceCount` is just the approximate of sentences count of output summary.
+If you do specify `parameters` `sentenceCount`, the model will try to predict the summaries in the length you specified. Note that the `sentenceCount` is just the approximate of sentences count of output summary, in range 1 to 20.
 
 ### Document Extractive Summarization
 1. Copy the command below into a text editor. The BASH example uses the `\` line continuation character. If your console or terminal uses a different line continuation character, use that character.
@@ -342,47 +344,57 @@ curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversat
 Example JSON Response
 ```json
 {
-    "jobId": "13efaec1-896e-4da9-8b61-19db8408f26a",
-    "lastUpdatedDateTime": "2022-09-14T16:39:10Z",
-    "createdDateTime": "2022-09-14T16:39:08Z",
-    "expirationDateTime": "2022-09-15T16:39:08Z",
-    "status": "succeeded",
-    "errors": [],
-    "displayName": "Conversation Task Example",
-    "tasks": {
-        "completed": 1,
-        "failed": 0,
-        "inProgress": 0,
-        "total": 1,
-        "items": [
+  "jobId": "d874a98c-bf31-4ac5-8b94-5c236f786754",
+  "lastUpdatedDateTime": "2022-09-29T17:36:42Z",
+  "createdDateTime": "2022-09-29T17:36:39Z",
+  "expirationDateTime": "2022-09-30T17:36:39Z",
+  "status": "succeeded",
+  "errors": [],
+  "displayName": "Conversation Task Example",
+  "tasks": {
+    "completed": 1,
+    "failed": 0,
+    "inProgress": 0,
+    "total": 1,
+    "items": [
+      {
+        "kind": "conversationalSummarizationResults",
+        "taskName": "Conversation Task 1",
+        "lastUpdateDateTime": "2022-09-29T17:36:42.895694Z",
+        "status": "succeeded",
+        "results": {
+          "conversations": [
             {
-                "kind": "conversationalSummarizationResults",
-                "taskName": "Conversation Task 1",
-                "lastUpdateDateTime": "2022-09-14T16:39:10.7359603Z",
-                "status": "succeeded",
-                "results": {
-                    "conversations": [
-                        {
-                            "summaries": [
-                                {
-                                    "aspect": "chapterTitle",
-                                    "text": "Smart Brew 300 Espresso Machine WiFi Connection"
-                                }
-                            ],
-                            "id": "conversation1",
-                            "warnings": []
-                        }
-                    ],
-                    "errors": [],
-                    "modelVersion": "latest"
+              "summaries": [
+                {
+                  "aspect": "chapterTitle",
+                  "text": "Smart Brew 300 Espresso Machine WiFi Connection",
+                  "contexts": [
+                    { "conversationItemId": "1", "offset": 0, "length": 53 },
+                    { "conversationItemId": "2", "offset": 0, "length": 94 },
+                    { "conversationItemId": "3", "offset": 0, "length": 266 },
+                    { "conversationItemId": "4", "offset": 0, "length": 85 },
+                    { "conversationItemId": "5", "offset": 0, "length": 119 },
+                    { "conversationItemId": "6", "offset": 0, "length": 21 },
+                    { "conversationItemId": "7", "offset": 0, "length": 109 }
+                  ]
                 }
+              ],
+              "id": "conversation1",
+              "warnings": []
             }
-        ]
-    }
+          ],
+          "errors": [],
+          "modelVersion": "latest"
+        }
+      }
+    ]
+  }
 }
+
 ```
 For long conversation, the model might segment it into multiple cohensive parts, and summarize each segment.
-There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
+The `contexts` field for each summary indicates from which range of the input conversation we generated the summary.
 
 ### Conversation Narrative
 
@@ -481,45 +493,53 @@ curl -X GET https://<your-language-resource-endpoint>/language/analyze-conversat
 Example JSON Response
 ```json
 {
-    "jobId": "19561f16-abbc-430a-a50f-e2cdd7f3d998",
-    "lastUpdatedDateTime": "2022-09-14T16:42:35Z",
-    "createdDateTime": "2022-09-14T16:42:31Z",
-    "expirationDateTime": "2022-09-15T16:42:31Z",
-    "status": "succeeded",
-    "errors": [],
-    "displayName": "Conversation Task Example",
-    "tasks": {
-        "completed": 1,
-        "failed": 0,
-        "inProgress": 0,
-        "total": 1,
-        "items": [
+  "jobId": "d874a98c-bf31-4ac5-8b94-5c236f786754",
+  "lastUpdatedDateTime": "2022-09-29T17:36:42Z",
+  "createdDateTime": "2022-09-29T17:36:39Z",
+  "expirationDateTime": "2022-09-30T17:36:39Z",
+  "status": "succeeded",
+  "errors": [],
+  "displayName": "Conversation Task Example",
+  "tasks": {
+    "completed": 1,
+    "failed": 0,
+    "inProgress": 0,
+    "total": 1,
+    "items": [
+      {
+        "kind": "conversationalSummarizationResults",
+        "taskName": "Conversation Task 1",
+        "lastUpdateDateTime": "2022-09-29T17:36:42.895694Z",
+        "status": "succeeded",
+        "results": {
+          "conversations": [
             {
-                "kind": "conversationalSummarizationResults",
-                "taskName": "Conversation Task 1",
-                "lastUpdateDateTime": "2022-09-14T16:42:35.5714752Z",
-                "status": "succeeded",
-                "results": {
-                    "conversations": [
-                        {
-                            "summaries": [
-                                {
-                                    "aspect": "narrative",
-                                    "text": "Agent_1 helps customer to set up wifi connection for Smart Brew 300 espresso machine."
-                                }
-                            ],
-                            "id": "conversation1",
-                            "warnings": []
-                        }
-                    ],
-                    "errors": [],
-                    "modelVersion": "latest"
+              "summaries": [
+                {
+                  "aspect": "narrative",
+                  "text": "Agent_1 helps customer to set up wifi connection for Smart Brew 300 espresso machine.",
+                  "contexts": [
+                    { "conversationItemId": "1", "offset": 0, "length": 53 },
+                    { "conversationItemId": "2", "offset": 0, "length": 94 },
+                    { "conversationItemId": "3", "offset": 0, "length": 266 },
+                    { "conversationItemId": "4", "offset": 0, "length": 85 },
+                    { "conversationItemId": "5", "offset": 0, "length": 119 },
+                    { "conversationItemId": "6", "offset": 0, "length": 21 },
+                    { "conversationItemId": "7", "offset": 0, "length": 109 }
+                  ]
                 }
+              ],
+              "id": "conversation1",
+              "warnings": []
             }
-        ]
-    }
+          ],
+          "errors": [],
+          "modelVersion": "latest"
+        }
+      }
+    ]
+  }
 }
 ```
-
 For long conversation, the model might segment it into multiple cohensive parts, and summarize each segment.
-There is also a lengthy `contexts` field for each summary, which means from which range of the input conversation we generated the summary.
+The `contexts` field for each summary indicates from which range of the input conversation we generated the summary.
