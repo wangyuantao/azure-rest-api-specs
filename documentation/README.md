@@ -630,8 +630,7 @@ curl -i -X POST https://<your-language-resource-endpoint>/language/analyze-conve
 }
 '
 ```
-
-Note if `summaryAspects` is `resolution`, you can optionaly specify `sentenceCount` parameter to control the output summary length. If you don't specify the `sentenceCount`, the model will smartly determine the summary length. Only `resolution` aspect supports `sentenceCount`.
+Only `resolution` aspect supports `sentenceCount`. If you do not specify parameters sentenceCount, the model will try to predict the summaries in the length you specified. Note that the sentenceCount is just the approximate of sentences count of output summary, in range 1 to 7. 
 
 2. Make the following changes in the command where needed:
     - Replace the value `your-language-resource-key` with your key.
