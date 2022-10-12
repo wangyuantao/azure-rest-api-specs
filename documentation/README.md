@@ -712,3 +712,8 @@ Example JSON Response
   }
 }
 ```
+
+### Migration Guide
+If you were using `2022-05-15-preview` API version, now it's time to migrate to new API version `2022-10-01-preview`. Please change the following places while migrating.
+
+1. Ensure `role` is filled for each `ConversationItem` when using issue resolution summarization. The valid `role` values are `Customer` and `Agent`. Otherwise the request will fail due to missing `role`.
