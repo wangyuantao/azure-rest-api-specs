@@ -719,14 +719,15 @@ If you were using `2022-05-15-preview` API version, now it's time to migrate to 
 1. Ensure `role` is filled for each `ConversationItem` when using issue resolution summarization. The valid `role` values are `Customer` and `Agent`. Otherwise the request will fail due to missing `role`.
 
 ### Test AAD and Javascript SDK
-1. Install the latest NodeJS
+1. Install the latest NodeJS.
 2. Create an empty folder and add dependencies:
 ```
 npm install @azure/identity
 npm install @yuantw/ai-language-text
 ```
 Note that when the official SDK published, replace the 2nd to `@azure/ai-language-text`
-3. Create an empty file `test.ts` and paste the code below
+
+3. Create an empty file `test.ts` and paste the code below:
 ```
 const { TextAnalysisClient } = require("@yuantw/ai-language-text");
 const { DefaultAzureCredential } = require("@azure/identity");
@@ -760,3 +761,5 @@ main()
 ```
 Note replace `https://testtip.cognitiveservices.azure.com/` with your Language resource endpoint, and add `Cognitive Services User` role to your language resource for your principals (users or services). See example:
 ![image](https://user-images.githubusercontent.com/98181/195719897-5f56eb5d-b75d-42d8-ad2b-7bb4d30a0917.png)
+
+4. Run `node test.ts`
