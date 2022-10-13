@@ -717,3 +717,46 @@ Example JSON Response
 If you were using `2022-05-15-preview` API version, now it's time to migrate to new API version `2022-10-01-preview`. Please change the following places while migrating.
 
 1. Ensure `role` is filled for each `ConversationItem` when using issue resolution summarization. The valid `role` values are `Customer` and `Agent`. Otherwise the request will fail due to missing `role`.
+
+### Test AAD and Javascript SDK
+1. Install the latest NodeJS
+2. Create an empty folder and add dependencies:
+```
+npm install @azure/identity
+npm install @yuantw/ai-language-text
+```
+Note that when the official SDK published, replace the 2nd to `@azure/ai-language-text`
+3. Create an empty file `test.ts` and paste the code below
+```
+const { TextAnalysisClient } = require("@yuantw/ai-language-text");
+const { DefaultAzureCredential } = require("@azure/identity");
+const doc = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there’s magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.";
+const op = { serviceVersion: "2022-10-01-preview" };
+const client = new TextAnalysisClient("https://testtip.cognitiveservices.azure.com/", new DefaultAzureCredential(), op);
+const actions = [{ kind: "AbstractiveSummarization", },];
+async function main() {
+    const poller = await client.beginAnalyzeBatch(actions, [doc], "en");
+    const results = await poller.pollUntilDone();
+    for await (const actionResult of results) {
+        if (actionResult.error) {
+            const { code, message } = actionResult.error;
+            throw new Error(`Unexpected error (${code}): ${message}`);
+        }
+        for (const result of actionResult.results) {
+            console.log(`- Document ${result.id}`);
+            if (result.error) {
+                const { code, message } = result.error;
+                throw new Error(`Unexpected error (${code}): ${message}`);
+            }
+            console.log("Summary:");
+            for (const summary of result.summaries) {
+                console.log(summary.text);
+                console.log(summary.contexts);
+            }
+        }
+    }
+}
+main()
+```
+Note replace `https://testtip.cognitiveservices.azure.com/` with your Language resource endpoint, and add `Cognitive Services User` role to your language resource for your principals (users or services). See example:
+![image](https://user-images.githubusercontent.com/98181/195719897-5f56eb5d-b75d-42d8-ad2b-7bb4d30a0917.png)
