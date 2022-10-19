@@ -1,5 +1,9 @@
 # Use Summarization Oct Preview API
 
+## Official document is available now!
+https://learn.microsoft.com/en-us/azure/cognitive-services/language-service/summarization/overview?tabs=document-summarization
+The content below was a draft for document team reference before the official document publish. So far, it is still up-to-date.
+
 ## Prerequisites
 1. The current version of cURL. 
 2. Azure subscription. 
