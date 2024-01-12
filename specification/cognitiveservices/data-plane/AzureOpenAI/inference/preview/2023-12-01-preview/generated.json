@@ -1072,7 +1072,8 @@
         "AzureMLIndex",
         "AzureCosmosDB",
         "Elasticsearch",
-        "Pinecone"
+        "Pinecone",
+        "SharePoint"
       ],
       "x-ms-enum": {
         "name": "AzureChatExtensionType",
@@ -1102,6 +1103,11 @@
             "name": "pinecone",
             "value": "Pinecone",
             "description": "Represents the use of Pinecone index as an Azure OpenAI chat extension."
+          },
+          {
+            "name": "sharePoint",
+            "value": "SharePoint",
+            "description": "Represents the use of SharePoint site as an Azure OpenAI chat extension."
           }
         ]
       }
@@ -3525,6 +3531,63 @@
       },
       "required": [
         "contentFields"
+      ]
+    },
+    "SharePointChatExtensionConfiguration": {
+      "type": "object",
+      "description": "A specific representation of configurable options for SharePoint site when using it as an Azure OpenAI chat\nextension.",
+      "properties": {
+        "parameters": {
+          "$ref": "#/definitions/SharePointChatExtensionParameters",
+          "description": "The parameters to use when configuring Azure OpenAI chat extensions."
+        }
+      },
+      "required": [
+        "parameters"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/definitions/AzureChatExtensionConfiguration"
+        }
+      ],
+      "x-ms-discriminator-value": "SharePoint"
+    },
+    "SharePointChatExtensionParameters": {
+      "type": "object",
+      "description": "Parameters for configuring Azure OpenAI SharePoint site chat extensions. The supported authentication type is APIKey.",
+      "properties": {
+        "authentication": {
+          "$ref": "#/definitions/OnYourDataAuthenticationOptions",
+          "description": "The authentication method to use when accessing the defined data source.\nEach data source type supports a specific set of available authentication methods; please see the documentation of\nthe data source for supported mechanisms.\nIf not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)\nauthentication."
+        },
+        "topNDocuments": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The configured top number of documents to feature for the configured query."
+        },
+        "inScope": {
+          "type": "boolean",
+          "description": "Whether queries should be restricted to use of indexed data."
+        },
+        "strictness": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer.",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "roleInformation": {
+          "type": "string",
+          "description": "Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit."
+        },
+        "sitePath": {
+          "type": "string",
+          "format": "uri",
+          "description": "The path URL of SharePoint site."
+        }
+      },
+      "required": [
+        "sitePath"
       ]
     },
     "StopFinishDetails": {

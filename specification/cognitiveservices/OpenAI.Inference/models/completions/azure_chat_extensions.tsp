@@ -6,6 +6,7 @@ import "./extensions/oyd/azure_machinelearning_index_options.tsp";
 import "./extensions/oyd/azure_cosmosdb_options.tsp";
 import "./extensions/oyd/elasticsearch_options.tsp";
 import "./extensions/oyd/pinecone_options.tsp";
+import "./extensions/oyd/sharepoint_options.tsp";
 
 namespace Azure.OpenAI;
 
@@ -36,6 +37,10 @@ enum AzureChatExtensionType {
   @added(ServiceApiVersions.v2023_12_01_Preview)
   @doc("Represents the use of Pinecone index as an Azure OpenAI chat extension.")
   pinecone: "Pinecone",
+
+  @added(ServiceApiVersions.v2023_12_01_Preview)
+  @doc("Represents the use of SharePoint site as an Azure OpenAI chat extension.")
+  sharePoint: "SharePoint",
 }
 
 @discriminator("type")
